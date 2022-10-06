@@ -22,11 +22,11 @@ In addition, this project will include:
 
 ## Wireframes
 
-![home page] (/assets/images/3-Home-page.png)
+![home page](/assets/images/3-Home-page.png)
 
-![game view] (/assets/images/3-Game-view.png)
+![game view](/assets/images/1-Game-view.png)
 
-![pause modal] (/assets/images/3-Pause-modal.png)
+![pause modal](/assets/images/2-Pause-modal.png)
 
 - On the home page, the nav links will inlcude links to this project's Github repo, my LinkedIn, and the about/home page.
 
@@ -45,12 +45,12 @@ In addition, this project will include:
 
 - Friday Afternoon & Weekend: Create sprite sheet with all images that I will use in the game. Setup project, including getting webpack up and running. Spend time getting comfortable with the Canvas API. Create classes and see game objects and sprites rendered on screen.
 
-Monday: Work on game logic. Code collision detection.
+- Monday: Work on game logic. Code collision detection.
 
-Tuesday: If main logic is completed, I will start working on sprite animations.
+- Tuesday: If main logic is completed, I will start working on sprite animations.
 
-Wednesday: If sprite animations are done, work on styling on UI styling of page and modal. Add background music and game pause functionality.
+- Wednesday: If sprite animations are done, work on styling on UI styling of page and modal. Add background music and game pause functionality.
 
-Thursday Morning: Deploy to GitHub pages. If time, rewrite this proposal as a production README.
+- Thursday Morning: Deploy to GitHub pages. If time, rewrite this proposal as a production README.
 
 ---
