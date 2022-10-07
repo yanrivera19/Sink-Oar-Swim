@@ -1,0 +1,38 @@
+{
+  "name": "sink-oar-swim",
+  "version": "1.0.0",
+  "description": "A white river kayaking game where users speed through a river and the longer they last without crashing, the higher their scores are. Users increase their scores through a combination of how long they last without crashing and how much currency they collect (in the form of bubbles). As time passes, speed of river will increase and more rocks might appear on the path, increasing the level of difficulty of the game. The goal of this project is to create a fun game for users and to make them want to improve their personal scores.",
+  "main": "index.js",
+  "browserslist": [
+    "defaults"
+  ],
+  
+  "scripts": {
+    "start": "webpack --watch --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanrivera19/Sink-Oar-Swim.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yanrivera19/Sink-Oar-Swim/issues"
+  },
+  "homepage": "https://github.com/yanrivera19/Sink-Oar-Swim#readme",
+  "dependencies": {
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.3",
+    "babel-loader": "^8.2.5",
+    "core-js": "^3.25.5",
+    "css-loader": "^6.7.1",
+    "mini-css-extract-plugin": "^2.6.1",
+    "regenerator-runtime": "^0.13.9",
+    "sass": "^1.55.0",
+    "sass-loader": "^13.1.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
