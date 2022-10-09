@@ -14,13 +14,16 @@ export default class Player {
 		this.dimensions = {width: canvas.width, height: canvas.height};
 		this.position = {vertical: this.dimensions.height / 2 + 100, horizontal: this.dimensions.width / 2 - 65 };
 		this.ctx = canvas.getContext("2d");
+		this.width = 150;
+		this.height = 150;
+		this.score = 0;
 	}
 
 	drawPlayer(ctx) {		
 		if (this.paddling) {
-			ctx.drawImage(playerAltImg, this.position.horizontal, this.position.vertical, 150, 120);
+			ctx.drawImage(playerAltImg, this.position.horizontal, this.position.vertical, this.width, this.height);
 		} else {
-			ctx.drawImage(playerImg, this.position.horizontal, this.position.vertical, 150, 120);
+			ctx.drawImage(playerImg, this.position.horizontal, this.position.vertical, this.width, this.height);
 		}
 	}
 
@@ -36,7 +39,7 @@ export default class Player {
 	}
 
 	checkBoundaries() {
-		const boundes = this.bounds();
+		this.bounds();
 		if (this.position.horizontal < 0) {
 			this.velocityL = 0;
 		}
@@ -48,10 +51,10 @@ export default class Player {
 
 	bounds() {
     return {
-      left: this.position.horizontal + 50,
-      right: this.position.horizontal + 100,
-      top: this.position.vertical,
-      bottom: this.position.vertical + 120
+      left: this.position.horizontal + 60,
+      right: this.position.horizontal + 90,
+      top: this.position.vertical + 10,
+      bottom: this.position.vertical + 110
     };
 	}
 }
