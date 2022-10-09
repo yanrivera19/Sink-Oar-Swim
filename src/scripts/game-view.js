@@ -1,5 +1,6 @@
 import Rock from "./rock";
 import Bubble from "./bubble";
+import River from "./river";
 import { randomNumFromRange, randomItemFromList } from "./utils";
 
 const rockImg1 = new Image();
@@ -10,14 +11,15 @@ const rockImg3 = new Image();
 rockImg3.src = "./assets/images/solids/rock3.png";
 const rockImages = [rockImg1, rockImg2, rockImg3];
 
-
 export default class GameView {
 	constructor(canvas) {
 		this.dimensions = {width: canvas.width, height: canvas.height};
+		this.rivers = [];
+		this.riverInit(canvas)
 		this.rocks = []
 		this.rockInit(canvas, rockImages, this.rockPositions);
 		this.bubbles = [];
-		this.bubbleInit(canvas, this.bubblePositions)
+		this.bubbleInit(canvas, this.bubblePositions);
 		this.objects = [this.rocks];		
 	}
 
@@ -33,9 +35,20 @@ export default class GameView {
 		}		
 	}
 
-	animate() {
+	riverInit(canvas) {
+		this.rivers.push(new River(canvas, {x: 0, y: 0}));
+		this.rivers.push(new River(canvas, {x: 0, y: -(this.dimensions.height)}));
+	}
+
+	animate() {		
+		this.moveRiver();
 		this.moveRocks();
 		this.moveBubbles();
+
+		this.rivers.forEach((river) => {
+			river.animate();			
+		})	
+		
 		this.rocks.forEach((rock) => {
 			rock.animate();			
 		})		
@@ -44,12 +57,23 @@ export default class GameView {
 		})	
 	}
 
-	moveRocks() {
-		this.rocks.forEach((rock) => {
-			rock.y += 2;			
+	moveRiver() {
+		this.rivers.forEach((river) => {
+			river.y += 2;			
 		})
 
-		if (this.rocks[0].y === 500) {
+		if (this.rivers[0].y >= 500) {
+			this.rivers.shift();
+			this.rivers.push(new River(canvas, {x: 0, y: -(this.dimensions.height)}));
+		}		
+	}
+
+	moveRocks() {
+		this.rocks.forEach((rock) => {
+			rock.y += 3;			
+		})
+
+		if (this.rocks[0].y >= 500) {
 			this.rocks.shift();
 			this.rocks.push(new Rock(canvas, randomItemFromList(rockImages), {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
 		}		
@@ -62,10 +86,10 @@ export default class GameView {
 				this.bubbles.push(new Bubble(canvas, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -200}));
 			}
 
-			bubble.y += 2;	
+			bubble.y += 3;	
 		})
 
-		if (this.bubbles[0].y === 500) {
+		if (this.bubbles[0].y >= 500) {
 			this.bubbles.shift();
 			this.bubbles.push(new Bubble(canvas, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
 		}		

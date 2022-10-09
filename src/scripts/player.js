@@ -16,7 +16,6 @@ export default class Player {
 		this.ctx = canvas.getContext("2d");
 		this.width = 150;
 		this.height = 150;
-		this.score = 0;
 	}
 
 	drawPlayer(ctx) {		

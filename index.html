@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<link rel="stylesheet" href="./dist/main.css" />
-		<script src="./dist/main.js" defer></script>
-		<title>Sink Oar Swim</title>
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./dist/main.css" />
+    <script src="./dist/main.js" defer></script>
+    <title>Sink Oar Swim</title>
+  </head>
 
-	<body>
-		<canvas id="canvas"></canvas>
-	</body>
+  <body>
+		<div id="pause-modal-container">
+			<dialog id="pause-modal">
+				<h1 id="pause-header">Paused</h1>
+				<br>
+				<div id="countdown-box">
+					<h3 id="countdown"></h3>
+					<!-- <progress value="3" min="0" id="progress-bar"></progress> -->
+				</div>
+			</dialog>
+		</div>
+    <canvas id="canvas"></canvas>
+  </body>
 
 </html>
