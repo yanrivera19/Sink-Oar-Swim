@@ -11,6 +11,18 @@
   transform: translate(-50%, -50%);
 }
 
+#score {
+  position: absolute;
+  top: 20%;
+  left: 70%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  color: gold;
+  text-shadow: 1px 1px 2px black;
+  font-weight: bold;
+  font-size: 50px;
+}
+
 #pause-modal-container {
   display: none;
   position: fixed;
