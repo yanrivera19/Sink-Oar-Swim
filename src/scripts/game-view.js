@@ -10,6 +10,11 @@ rockImg2.src = "./assets/images/solids/rock2.png";
 const rockImg3 = new Image();
 rockImg3.src = "./assets/images/solids/rock3.png";
 const rockImages = [rockImg1, rockImg2, rockImg3];
+const waterImg = new Image();
+waterImg.src = "./assets/images/water/water.jpg"
+const waterImg2 = new Image();
+waterImg2.src = "./assets/images/water/image.png"
+const bubbleSound = new Audio("./assets/audio/bubble-sound.mp3")
 
 export default class GameView {
 	constructor(canvas) {
@@ -20,7 +25,7 @@ export default class GameView {
 		this.rockInit(canvas, rockImages, this.rockPositions);
 		this.bubbles = [];
 		this.bubbleInit(canvas, this.bubblePositions);
-		this.objects = [this.rocks];		
+		// this.objects = [this.rocks];		
 	}
 
 	rockInit(canvas, images, position) {
@@ -36,8 +41,8 @@ export default class GameView {
 	}
 
 	riverInit(canvas) {
-		this.rivers.push(new River(canvas, {x: 0, y: 0}));
-		this.rivers.push(new River(canvas, {x: 0, y: -(this.dimensions.height)}));
+		this.rivers.push(new River(canvas, waterImg, {x: 0, y: 0}));
+		this.rivers.push(new River(canvas, waterImg2, {x: 0, y: -(this.dimensions.height)}));
 	}
 
 	animate() {		
@@ -63,8 +68,16 @@ export default class GameView {
 		})
 
 		if (this.rivers[0].y >= 500) {
+			let image;
+			
+			if (this.rivers[0].image === waterImg) {
+				image = waterImg;
+			} else {
+				image = waterImg2;
+			}
+
 			this.rivers.shift();
-			this.rivers.push(new River(canvas, {x: 0, y: -(this.dimensions.height)}));
+			this.rivers.push(new River(canvas, image, {x: 0, y: -(this.dimensions.height)}));
 		}		
 	}
 

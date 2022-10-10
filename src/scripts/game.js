@@ -8,6 +8,7 @@ import { distance } from "./utils";
 
 const waterImg = new Image();
 waterImg.src = "./assets/images/water/water.jpg"
+const bubbleSound = new Audio("./assets/audio/bubble-sound2.mp3")
 
 export default class Game {
 	constructor(canvas) {
@@ -16,17 +17,21 @@ export default class Game {
     this.canvas = canvas;
 		this.score = 0;
 		this.paused = false;
+		this.numOfPauses = 0;
 		this.listenForPauseEvent();
 		this.eventListeners();
+		const mainContainer = document.querySelector("#container");
+		const score = document.createElement("h3");
+		score.setAttribute("id", "score");
+		score.innerHTML = "0";
+		mainContainer.prepend(score);
 		this.play(); 		
 	}
 
 	animate(ctx) {
 		ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
 		this.gameView.animate();		
-		ctx.font = '48px serif';
-		ctx.textAlign = 'right';
-		ctx.fillText(`${this.score}`, this.dimensions.width, 50);
+		this.renderScore();
 		this.player.animate();
 		this.checkRockCollisions();
 		this.checkBubbleCollisions(); 
@@ -40,10 +45,16 @@ export default class Game {
 		this.animate(this.ctx);
 	}
 
+	renderScore() {		
+		score.innerHTML = `${this.score}`;		
+	}
+
 	listenForPauseEvent() {
 		addEventListener("keydown", (e) => {		
 			if (e.code === "KeyP") {
-				this.togglePause();
+				this.numOfPauses++;
+
+				if (this.numOfPauses < 3) this.togglePause();
 			}
 		})
 	}
@@ -65,6 +76,7 @@ export default class Game {
 				if (timeLeft <= 0) {
 					clearInterval(timer);
 					pauseHeader.innerHTML = "Paused";
+					this.numOfPauses = 0;
 					this.paused = false;
 					modal.style.display = "none";
 					requestAnimationFrame(this.animate.bind(this, this.ctx));			
@@ -97,38 +109,27 @@ export default class Game {
 			if (e.code === "ArrowRight") {
 				this.player.velocityR = 0;
 				this.player.paddling = false;
-
 			}			
 		})
 		
 	}
 
+	collided(obj1, obj2) {
+		if (obj1.left > obj2.right || obj1.right < obj2.left) {
+			return false;
+		}
+
+		if (obj1.top > obj2.bottom || obj1.bottom < obj2.top) {
+			return false;
+		}
+
+		return true;
+	}
+
 	checkRockCollisions() {
-		this.gameView.rocks.forEach((rock) => {
-			if (this.player.bounds().left < rock.bounds().right && this.player.bounds().top < rock.bounds().bottom && 
-			distance(this.player.bounds().left, this.player.bounds().top, rock.bounds().right, rock.bounds().bottom) < 
-				((this.player.width / 2) + (rock.width / 2))) {
-				alert("collision");
-				window.location.reload();
-			}
-			if (this.player.bounds().right > rock.bounds().left && this.player.bounds().top < rock.bounds().bottom && 
-			distance(this.player.bounds().right, this.player.bounds().top, rock.bounds().left, rock.bounds().bottom) < 
-				((this.player.width / 2) + (rock.width / 2))) {
-				alert("collision");
-				window.location.reload();
-			}
-
-			if (this.player.bounds().left < rock.bounds().right && this.player.bounds().bottom > rock.bounds().top && 
-			distance(this.player.bounds().left, this.player.bounds().bottom, rock.bounds().right, rock.bounds().top) < 
-				((this.player.width / 2) + (rock.width / 2))) {
-				alert("collision");
-				window.location.reload();
-			}
-
-			if (this.player.bounds().right > rock.bounds().left && this.player.bounds().bottom > rock.bounds().top && 
-			distance(this.player.bounds().right, this.player.bounds().bottom, rock.bounds().left, rock.bounds().top) < 
-				((this.player.width / 2) + (rock.width / 2))) {
-				alert("collision");
+		this.gameView.rocks.forEach((rock) => {		
+			if (this.collided(rock, this.player)) {
+			  alert("collision");
 				window.location.reload();
 			}
 		})
@@ -136,53 +137,20 @@ export default class Game {
 
 	checkBubbleCollisions() {
 		this.gameView.bubbles.forEach((bubble, idx) => {
-			if (this.player.bounds().left < bubble.bounds().right && this.player.bounds().top < bubble.bounds().bottom && 
-			distance(this.player.bounds().left, this.player.bounds().top, bubble.bounds().right, bubble.bounds().bottom) < 
-				((this.player.width / 2) + (bubble.radius))) {
-				this.score++;
-				this.gameView.bubbles[idx].caught = true;
-			} else if (this.player.bounds().right > bubble.bounds().left && this.player.bounds().top < bubble.bounds().bottom && 
-			distance(this.player.bounds().right, this.player.bounds().top, bubble.bounds().left, bubble.bounds().bottom) < 
-				((this.player.width / 2) + (bubble.radius))) {
-				this.score++;
-				this.gameView.bubbles[idx].caught = true;
-			} else if (this.player.bounds().left < bubble.bounds().right && this.player.bounds().bottom > bubble.bounds().top && 
-			distance(this.player.bounds().left, this.player.bounds().bottom, bubble.bounds().right, bubble.bounds().top) < 
-				((this.player.width / 2) + (bubble.radius))) {
-				this.score++;
-				this.gameView.bubbles[idx].caught = true;
-			} else if (this.player.bounds().right > bubble.bounds().left && this.player.bounds().bottom > bubble.bounds().top && 
-			distance(this.player.bounds().right, this.player.bounds().bottom, bubble.bounds().left, bubble.bounds().top) < 
-				((this.player.width / 2) + (bubble.radius))) {
+			if (this.collided(bubble, this.player)) {
+				bubbleSound.play();
 				this.score++;
 				this.gameView.bubbles[idx].caught = true;
 			}
+			// const centerDist = this.dist([this.player.position.horizontal + (this.player.width / 2), this.player.position.vertical + (this.player.width / 2)], [bubble.x + bubble.radius, bubble.y + bubble.radius]);
+			// console.log(centerDist)
+			// if (centerDist < ((this.player.width / 2) + bubble.radius)) {
+			// 	bubbleSound.play();
+			// 	// console.log("collision")
+			// }
+
+		
 		})
-
-		// 	if (distance(this.player.bounds().left, this.player.bounds().top, bubble.bounds().right, bubble.bounds().bottom) < 
-		// 		((bubble.radius))) {
-		// 		this.score++;
-		// 		this.gameView.bubbles[idx].caught = true;
-		// 	}
-
-		// 	if (distance(this.player.bounds().right, this.player.bounds().top, bubble.bounds().left, bubble.bounds().bottom) < 
-		// 		((bubble.radius))) {
-		// 		this.score++;
-		// 		this.gameView.bubbles[idx].caught = true;
-		// 	}
-
-		// 	if (distance(this.player.bounds().left, this.player.bounds().bottom, bubble.bounds().right, bubble.bounds().top) < 
-		// 		((bubble.radius))) {
-		// 		this.score++;
-		// 		this.gameView.bubbles[idx].caught = true;
-		// 	}
-
-		// 	if (distance(this.player.bounds().right, this.player.bounds().bottom, bubble.bounds().left, bubble.bounds().top) < 
-		// 		((bubble.radius))) {
-		// 		this.score++;
-		// 		this.gameView.bubbles[idx].caught = true;
-		// 	}
-		// })
 	}
 
 }
