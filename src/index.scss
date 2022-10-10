@@ -13,6 +13,18 @@
   // animation-timing-function: linear;	
 }
 
+#score {
+	position: absolute;
+  top: 20%;
+  left: 70%;
+	z-index: 2;
+	transform: translate(-50%, -50%);
+	color: gold;
+	text-shadow: 1px 1px 2px black;
+	font-weight: bold;
+	font-size: 50px;
+}
+
 // @keyframes animate-background {
 // 	from {background-position: 0px 0px;}
 // 	to { background-position: 0px 300px;}
@@ -43,9 +55,3 @@
 	border-radius: 10px;
 	padding: 2rem 1rem;
 }
-
-// #score {
-// 	position: absolute;
-// 	display: block;
-// 	z-index: 10;
-// }
