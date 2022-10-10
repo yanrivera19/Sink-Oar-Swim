@@ -14,8 +14,12 @@ export default class Player {
 		this.dimensions = {width: canvas.width, height: canvas.height};
 		this.position = {vertical: this.dimensions.height / 2 + 100, horizontal: this.dimensions.width / 2 - 65 };
 		this.ctx = canvas.getContext("2d");
-		this.width = 150;
-		this.height = 150;
+		this.left; 
+		this.top;
+		this.bottom;
+		this.left;
+		this.width = 140;
+		this.height = 140;
 	}
 
 	drawPlayer(ctx) {		
@@ -38,7 +42,11 @@ export default class Player {
 	}
 
 	checkBoundaries() {
-		this.bounds();
+		this.left = this.position.horizontal + 60;
+		this.right = this.position.horizontal + 90;
+		this.top = this.position.vertical + 10;
+		this.bottom = this.position.vertical + 110;
+
 		if (this.position.horizontal < 0) {
 			this.velocityL = 0;
 		}
@@ -47,14 +55,4 @@ export default class Player {
 			this.velocityR = 0;
 		}
 	}
-
-	bounds() {
-    return {
-      left: this.position.horizontal + 60,
-      right: this.position.horizontal + 90,
-      top: this.position.vertical + 10,
-      bottom: this.position.vertical + 110
-    };
-	}
 }
-
