@@ -2,8 +2,8 @@ const bubbleImg = new Image();
 bubbleImg.src = "./assets/images/water/bubble.png";
 
 export default class Bubble {
-  constructor(canvas, position) {
-    this.velocity = 2;
+  constructor(canvas, velocity, position) {
+    this.velocity = velocity;
     this.dimensions = {width: canvas.width, height: canvas.height};
     this.x = position.x;
     this.y = position.y;

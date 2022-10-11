@@ -24,6 +24,7 @@ export default class Game {
 		this.lives = 3;
 		this.paused = false;
 		this.numOfPauses = 0;
+		this.timeCounter = 0;
 		this.collisionOccured = false;
 		this.listenForPauseEvent();
 		this.eventListeners();
@@ -33,7 +34,7 @@ export default class Game {
 		mainContainer.prepend(playerStat);
 		playerStat.append(lives, score);
 		this.gameOff = false;
-		this.play(); 		
+		this.play();
 	}
 
 	animate(ctx) {
@@ -45,6 +46,8 @@ export default class Game {
 			this.player.animate();
 			this.checkRockCollisions();
 			this.checkBubbleCollisions(); 
+			if (!this.paused && this.timeCounter < 1800) this.timeCounter++;
+			if (this.timeCounter >= 1800) this.increaseDifficulty();
 			this.frameId = requestAnimationFrame(this.animate.bind(this, ctx));
 		}		
 	}
@@ -112,6 +115,11 @@ export default class Game {
 				timeLeft--;
 			}, 1000);
 		}
+	}
+
+	increaseDifficulty() {
+		this.timeCounter = 0;
+		this.gameView.increaseVelocities([this.gameView.rocks, this.gameView.bubbles, this.gameView.rivers]);
 	}
 
 	eventListeners() {

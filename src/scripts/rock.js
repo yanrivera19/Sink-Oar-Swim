@@ -1,6 +1,6 @@
 export default class Rock {
-	constructor(canvas, image, position) {
-		this.velocity = 2;
+	constructor(canvas, velocity, image, position) {
+		this.velocity = velocity;
 		this.dimensions = {width: canvas.width, height: canvas.height};
 		this.x = position.x;
 		this.y = position.y;

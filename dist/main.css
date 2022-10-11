@@ -1,3 +1,246 @@
-#pause-modal-container{display:none;position:fixed;justify-content:center;align-items:center;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.6);z-index:10}#pause-modal{display:block;background:#000;color:#fff;width:80vw;max-width:400px;border-radius:10px;padding:2rem 1rem;text-align:center;text-transform:uppercase}#pause-header{font-size:2vw;font-family:"Archivo Black",sans-serif}#countdown-box{font-family:"Space Mono",sans-serif;font-size:1.5vw;color:gold}html,body,header,nav,h1,a,ul,li,strong,main,button,i,section,img,div,h2,p,form,fieldset,label,input,textarea,span,article,footer,time,small{margin:0;padding:0;border:0;outline:0;font:inherit;color:inherit;text-align:inherit;text-decoration:inherit;vertical-align:inherit;box-sizing:inherit;background:rgba(0,0,0,0)}body{background-color:#f1f2f4}ul{list-style:none}img{display:block;width:100%;height:auto}input[type=password],input[type=email],input[type=text],input[type=submit],textarea,button{-webkit-appearance:none;-moz-appearance:none}button,input[type=submit]{cursor:pointer}#home-page{display:flex;justify-content:center;align-items:center}.home-content{color:#fff;z-index:100;background:rgba(0,0,0,.9);border-radius:20px;padding:10em}#hp-title,#title{font-size:4vw;font-family:"Archivo Black",sans-serif;letter-spacing:.5vw;text-indent:.5vw;text-transform:uppercase}#title{color:#fff;-webkit-text-stroke:2px #000}.home-content>ul{font-family:"Space Mono",sans-serif;font-size:1.5vw;display:flex;flex-direction:column;justify-content:center;align-items:center}.hp-social-links{display:flex}.hp-social-links>a{margin:10px}#myVideo{object-fit:cover;width:100vw;height:100vh;position:fixed;top:0;left:0}li{cursor:pointer}footer{position:fixed;bottom:0;color:#000}footer>ul{display:flex;justify-content:space-between}#game-over-modal{display:none;position:fixed;justify-content:center;align-items:center;z-index:600}.go-content{color:#fff;background:rgba(0,0,0,.9);border-radius:20px;padding:10em}.go-content>ul{font-family:"Space Mono",sans-serif;font-size:1.5vw;display:flex;flex-direction:column;justify-content:center;align-items:center}.go-title{font-size:4vw;font-family:"Archivo Black",sans-serif;letter-spacing:.5vw;text-indent:.5vw;text-transform:uppercase;color:#ff0606}html{height:100%;width:100%}body{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%}.main-container{display:none;width:100%;height:100%;justify-content:center;align-items:center;flex-direction:column;background:radial-gradient(rgba(0, 0, 0, 0.053), rgba(0, 0, 0, 0.914)),url("/assets/images/bg-rocks2.jpg");background-position:center;background-repeat:no-repeat;background-size:cover}#canvas{border:5px solid #000;position:relative;width:700;height:500}#player-stat-container{display:flex;justify-content:center;align-items:center;position:absolute;top:25%;left:60%;z-index:5}#score{font-family:"Space Mono",sans-serif;color:gold;text-shadow:1px 1px 2px #000;font-weight:bold;font-size:35px;margin-left:25px}#lives{font-family:"Space Mono",sans-serif;color:#b30000;text-shadow:1px 1px 2px #000;font-weight:bold;font-size:35px}
+/*!*************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*************************************************************************************************************************************/
+#pause-modal-container {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
 
-/*# sourceMappingURL=main.css.map*/
+#pause-modal {
+  display: block;
+  background: black;
+  color: white;
+  width: 80vw;
+  max-width: 400px;
+  border-radius: 10px;
+  padding: 2rem 1rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#pause-header {
+  font-size: 2vw;
+  font-family: "Archivo Black", sans-serif;
+}
+
+#countdown-box {
+  font-family: "Space Mono", sans-serif;
+  font-size: 1.5vw;
+  color: gold;
+}
+
+html, body, header, nav, h1, a,
+ul, li, strong, main, button, i,
+section, img, div, h2, p, form,
+fieldset, label, input, textarea,
+span, article, footer, time, small {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  vertical-align: inherit;
+  box-sizing: inherit;
+  background: transparent;
+}
+
+body {
+  background-color: #f1f2f4;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+input[type=password],
+input[type=email],
+input[type=text],
+input[type=submit],
+textarea,
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button,
+input[type=submit] {
+  cursor: pointer;
+}
+
+#home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-content {
+  color: white;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 20px;
+  padding: 10em;
+}
+
+#hp-title, #title {
+  font-size: 4vw;
+  font-family: "Archivo Black", sans-serif;
+  letter-spacing: 0.5vw;
+  text-indent: 0.5vw;
+  text-transform: uppercase;
+}
+
+#title {
+  color: white;
+  -webkit-text-stroke: 2px black;
+}
+
+.home-content > ul {
+  font-family: "Space Mono", sans-serif;
+  font-size: 1.5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hp-social-links {
+  display: flex;
+}
+
+.hp-social-links > a {
+  margin: 10px;
+}
+
+#myVideo {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+li {
+  cursor: pointer;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  color: black;
+}
+
+footer > ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+#game-over-modal {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  z-index: 600;
+}
+
+.go-content {
+  color: white;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 20px;
+  padding: 10em;
+}
+
+.go-content > ul {
+  font-family: "Space Mono", sans-serif;
+  font-size: 1.5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.go-title {
+  font-size: 4vw;
+  font-family: "Archivo Black", sans-serif;
+  letter-spacing: 0.5vw;
+  text-indent: 0.5vw;
+  text-transform: uppercase;
+  color: rgb(255, 6, 6);
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.main-container {
+  display: none;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: radial-gradient(rgba(0, 0, 0, 0.053), rgba(0, 0, 0, 0.914)), url("/assets/images/bg-rocks2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#canvas {
+  border: 5px solid black;
+  position: relative;
+  width: 700;
+  height: 500;
+}
+
+#player-stat-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 25%;
+  left: 60%;
+  z-index: 5;
+}
+
+#score {
+  font-family: "Space Mono", sans-serif;
+  color: gold;
+  text-shadow: 1px 1px 2px black;
+  font-weight: bold;
+  font-size: 35px;
+  margin-left: 25px;
+}
+
+#lives {
+  font-family: "Space Mono", sans-serif;
+  color: rgb(179, 0, 0);
+  text-shadow: 1px 1px 2px black;
+  font-weight: bold;
+  font-size: 35px;
+}

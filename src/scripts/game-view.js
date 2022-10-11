@@ -8,7 +8,7 @@ rockImg1.src = "./assets/images/solids/rock1.png";
 const rockImg2 = new Image();
 rockImg2.src = "./assets/images/solids/rock2.png";
 const rockImg3 = new Image();
-rockImg3.src = "./assets/images/solids/rock3.png";
+rockImg3.src = "./assets/images/solids/rock2.png";
 const rockImages = [rockImg1, rockImg2, rockImg3];
 const waterImg = new Image();
 waterImg.src = "./assets/images/water/water.jpg"
@@ -18,6 +18,8 @@ const bubbleSound = new Audio("./assets/audio/bubble-sound.mp3")
 
 export default class GameView {
 	constructor(canvas) {
+		this.rockBubbleVelo = 3;
+		this.riverVelo = 2;
 		this.dimensions = {width: canvas.width, height: canvas.height};
 		this.rivers = [];
 		this.riverInit(canvas)
@@ -29,19 +31,19 @@ export default class GameView {
 
 	rockInit(canvas, images, position) {
 		for (let i = 0; i < 3; i++) {
-			this.rocks.push(new Rock(canvas, randomItemFromList(images), position()[i]));
+			this.rocks.push(new Rock(canvas, this.rockBubbleVelo, randomItemFromList(images), position()[i]));
 		}				
 	}
 
 	bubbleInit(canvas, position) {
 		for (let i = 0; i < 4; i++) {
-			this.bubbles.push(new Bubble(canvas, position()[i]));
+			this.bubbles.push(new Bubble(canvas, this.rockBubbleVelo, position()[i]));
 		}		
 	}
 
 	riverInit(canvas) {
-		this.rivers.push(new River(canvas, waterImg, {x: 0, y: 0}));
-		this.rivers.push(new River(canvas, waterImg2, {x: 0, y: -(this.dimensions.height)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: 0}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height)}));
 	}
 
 	animate() {		
@@ -63,10 +65,10 @@ export default class GameView {
 
 	moveRiver() {
 		this.rivers.forEach((river) => {
-			river.y += 2;			
+			river.y += river.velocity;			
 		})
 
-		if (this.rivers[0].y >= 500) {
+		if (this.rivers[0].y >= 500 - (this.riverVelo * 2)) {
 			let image;
 			
 			if (this.rivers[0].image === waterImg) {
@@ -76,18 +78,18 @@ export default class GameView {
 			}
 
 			this.rivers.shift();
-			this.rivers.push(new River(canvas, image, {x: 0, y: -(this.dimensions.height)}));
+			this.rivers.push(new River(canvas, this.riverVelo, image, {x: 0, y: -(this.dimensions.height)}));
 		}		
 	}
 
 	moveRocks() {
 		this.rocks.forEach((rock) => {
-			rock.y += 3;			
+			rock.y += rock.velocity;			
 		})
 
 		if (this.rocks[0].y >= 500) {
 			this.rocks.shift();
-			this.rocks.push(new Rock(canvas, randomItemFromList(rockImages), {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
+			this.rocks.push(new Rock(canvas, this.rockBubbleVelo, randomItemFromList(rockImages), {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
 		}		
 	}
 
@@ -95,16 +97,30 @@ export default class GameView {
 		this.bubbles.forEach((bubble, idx) => {
 			if (bubble.caught) {
 				this.bubbles.splice(idx, 1);
-				this.bubbles.push(new Bubble(canvas, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -200}));
+				this.bubbles.push(new Bubble(canvas, this.rockBubbleVelo, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -200}));
 			}
 
-			bubble.y += 3;	
+			bubble.y += bubble.velocity;	
 		})
 
 		if (this.bubbles[0].y >= 500) {
 			this.bubbles.shift();
-			this.bubbles.push(new Bubble(canvas, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
+			this.bubbles.push(new Bubble(canvas, this.rockBubbleVelo, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
 		}		
+	}
+
+	increaseVelocities(listOfObjects) {
+		this.riverVelo += 2
+		this.rockBubbleVelo += 2
+		for (let objects of listOfObjects) {
+			for (let object of objects) {
+				if (object instanceof River) {
+					object.velocity = this.riverVelo;
+				} else {
+					object.velocity = this.rockBubbleVelo;
+				}
+			}
+		}
 	}
 
 	rockPositions() {
