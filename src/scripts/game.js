@@ -20,7 +20,7 @@ export default class Game {
 		this.numOfPauses = 0;
 		this.listenForPauseEvent();
 		this.eventListeners();
-		const mainContainer = document.querySelector("#container");
+		const mainContainer = document.querySelector(".main-container");
 		const score = document.createElement("h3");
 		score.setAttribute("id", "score");
 		score.innerHTML = "0";
@@ -123,16 +123,39 @@ export default class Game {
 			return false;
 		}
 
+		// cancelAnimationFrame(this.frameId);			
 		return true;
 	}
 
 	checkRockCollisions() {
-		this.gameView.rocks.forEach((rock) => {		
+		for (let rock of this.gameView.rocks) {
 			if (this.collided(rock, this.player)) {
-			  alert("collision");
-				window.location.reload();
+			  // alert("collision");
+				// this.togglePause();
+				
+				
+				// window.location.reload();
+				// console.log("collision")
+				const gameOverModal = document.querySelector("#game-over-modal");
+				gameOverModal.style.display = "flex";	
+				cancelAnimationFrame(this.frameId);			
+				break;
+				
+				
 			}
-		})
+		}
+		// this.gameView.rocks.forEach((rock) => {		
+		// 	if (this.collided(rock, this.player)) {
+		// 	  // alert("collision");
+		// 		this.togglePause();
+				
+		// 		// window.location.reload();
+		// 		// console.log("collision")
+		// 		// const gameOverModal = document.querySelector("#game-over-modal");
+		// 		// gameOverModal.style.display = "flex";		
+				
+		// 	}
+		// })
 	}
 
 	checkBubbleCollisions() {

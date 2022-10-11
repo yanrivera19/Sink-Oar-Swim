@@ -1,0 +1,33 @@
+#game-over-modal {
+	display: none;
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	z-index: 600;
+}
+
+.go-content {
+	color: white;
+	// text-shadow: 1px 1px 4px gold;
+
+	background: rgba(0, 0, 0, 0.6);
+	border-radius: 20px;
+	padding: 10em;
+}
+
+.go-content > ul {
+	font-family: 'Space Mono', sans-serif;
+	font-size: 1.5vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.go-title {
+	font-size: 4vw;
+	font-family: 'Archivo Black', sans-serif;
+	letter-spacing: 0.5vw;
+	text-indent: 0.5vw;
+	text-transform: uppercase;
+}

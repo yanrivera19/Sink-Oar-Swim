@@ -6,12 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="./dist/main.css" />
+		<link href="http://fonts.cdnfonts.com/css/archivo-black" rel="stylesheet">
+		<link href="http://fonts.cdnfonts.com/css/space-mono" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="./dist/main.js" defer></script>
     <title>Sink Oar Swim</title>
   </head>
 
   <body>
-		<div id="pause-modal-container">
+		<section id="home-page">
+			<video autoplay muted playsinline loop id="myVideo">
+				<source src="./assets/river-vid.mp4" type="video/mp4">
+			</video>	
+			<div class="home-content">							
+				<h1 id="hp-title">Sink Oar Swim</h1>
+				<ul>
+					<li id="play-btn">Play</li>
+					<li>How to Play</li>
+					<section class="hp-social-links">
+						<a href="https://github.com/yanrivera19/Sink-Oar-Swim" target="_blank">
+							<i class="fa-brands fa-github"></i>
+						</a>
+						<a href="https://www.linkedin.com/in/ycrivera/" target="_blank">
+							<i class="fa-brands fa-linkedin-in"></i>
+						</a>
+					</section>
+				</ul>
+			</div>
+		</section>
+		<section id="pause-modal-container">
 			<dialog id="pause-modal">
 				<h1 id="pause-header">Paused</h1>
 				<br>
@@ -19,10 +42,34 @@
 					<h3 id="countdown"></h3>
 				</div>
 			</dialog>
-		</div>
-		<main id="container">
+		</section>
+		<section id="game-over-modal">
+			<div class="go-content">		
+				<h1 class="go-title">You Crashed!</h1>
+				<ul>
+					<li id="play-again-btn">Play Again</li>
+					<li id="go-to-hp-btn">Go To Homepage</li>
+					<section class="hp-social-links">
+						<a href="https://github.com/yanrivera19/Sink-Oar-Swim" target="_blank">
+							<i class="fa-brands fa-github"></i>
+						</a>
+						<a href="https://www.linkedin.com/in/ycrivera/" target="_blank">
+							<i class="fa-brands fa-linkedin-in"></i>
+						</a>
+					</section>
+				</ul>
+			</div>	
+		</section>
+		<main class="main-container">
+			<h1 id="title">Sink Oar Swim</h1>
 			<canvas id="canvas"></canvas>
 		</main>
+		<!-- <footer>
+			<ul class="social-links">
+				<li>GitHub</li>
+				<li>LinkedIn</li>
+			</ul>
+		</footer> -->
   </body>
 
 </html>
