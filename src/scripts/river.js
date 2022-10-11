@@ -1,6 +1,3 @@
-
-
-
 export default class River {
 	constructor(canvas, image, position) {
 		this.velocity = 2;

@@ -1,5 +1,3 @@
-import GameView from "./game-view";
-
 const playerImg = new Image();
 playerImg.src = "./assets/images/player.png";
 const playerAltImg = new Image();

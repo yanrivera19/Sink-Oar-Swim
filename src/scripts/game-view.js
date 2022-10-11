@@ -25,7 +25,6 @@ export default class GameView {
 		this.rockInit(canvas, rockImages, this.rockPositions);
 		this.bubbles = [];
 		this.bubbleInit(canvas, this.bubblePositions);
-		// this.objects = [this.rocks];		
 	}
 
 	rockInit(canvas, images, position) {

@@ -7,8 +7,13 @@ import GameView from "./game-view";
 import { distance } from "./utils";
 
 const waterImg = new Image();
-waterImg.src = "./assets/images/water/water.jpg"
-const bubbleSound = new Audio("./assets/audio/bubble-sound2.mp3")
+waterImg.src = "./assets/images/water/water.jpg";
+const bubbleSound = new Audio("./assets/audio/bubble-sound2.mp3");
+const mainContainer = document.querySelector(".main-container");
+let playerStat = document.createElement("section");
+let score = document.createElement("h3");
+let lives = document.createElement("h3");
+
 
 export default class Game {
 	constructor(canvas) {
@@ -16,26 +21,32 @@ export default class Game {
     this.dimensions = { width: canvas.width, height: canvas.height };
     this.canvas = canvas;
 		this.score = 0;
+		this.lives = 3;
 		this.paused = false;
 		this.numOfPauses = 0;
+		this.collisionOccured = false;
 		this.listenForPauseEvent();
 		this.eventListeners();
-		const mainContainer = document.querySelector(".main-container");
-		const score = document.createElement("h3");
+		playerStat.setAttribute("id", "player-stat-container");
 		score.setAttribute("id", "score");
-		score.innerHTML = "0";
-		mainContainer.prepend(score);
+		lives.setAttribute("id", "lives");
+		mainContainer.prepend(playerStat);
+		playerStat.append(lives, score);
+		this.gameOff = false;
 		this.play(); 		
 	}
 
 	animate(ctx) {
-		ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
-		this.gameView.animate();		
-		this.renderScore();
-		this.player.animate();
-		this.checkRockCollisions();
-		this.checkBubbleCollisions(); 
-		this.frameId = requestAnimationFrame(this.animate.bind(this, ctx));
+		if (!this.gameOff) {
+			ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
+			this.gameView.animate();		
+			this.renderScore();
+			this.renderLives();
+			this.player.animate();
+			this.checkRockCollisions();
+			this.checkBubbleCollisions(); 
+			this.frameId = requestAnimationFrame(this.animate.bind(this, ctx));
+		}		
 	}
 
 	play() {
@@ -49,14 +60,29 @@ export default class Game {
 		score.innerHTML = `${this.score}`;		
 	}
 
+	renderLives() {		
+		lives.innerHTML = `<i id="heart-icon" class="fa-solid fa-heart"></i>${this.lives}`;		
+	}
+
 	listenForPauseEvent() {
 		addEventListener("keydown", (e) => {		
-			if (e.code === "KeyP") {
+			if (e.code === "KeyP" && !this.gameOff) {
 				this.numOfPauses++;
 
 				if (this.numOfPauses < 3) this.togglePause();
 			}
 		})
+	}
+
+	restart() {
+		this.gameOff = false;
+		playerStat.remove();
+		playerStat = document.createElement("section");
+		lives = document.createElement("h3");
+		score = document.createElement("h3");
+		playerStat.setAttribute("id", "player-stat-container");
+		lives.setAttribute("id", "lives");
+		score.setAttribute("id", "score");
 	}
 
 	togglePause() {
@@ -122,40 +148,35 @@ export default class Game {
 		if (obj1.top > obj2.bottom || obj1.bottom < obj2.top) {
 			return false;
 		}
-
-		// cancelAnimationFrame(this.frameId);			
+	
 		return true;
 	}
 
-	checkRockCollisions() {
+	checkRockCollisions() {	
+		let collisionOccuring = false;
+
 		for (let rock of this.gameView.rocks) {
 			if (this.collided(rock, this.player)) {
-			  // alert("collision");
-				// this.togglePause();
+				collisionOccuring = true;
+				if (this.lives > 0 && !this.collisionOccured) {
+					this.lives--;
+					this.collisionOccured = true;
+					break;
+				} else if (this.lives > 0 && this.collisionOccured) {
+					break;
+				} else {
+					this.gameOff = true;
+					const gameOverModal = document.querySelector("#game-over-modal");
+					gameOverModal.style.display = "flex";	
+					break;
+				}			
 				
-				
-				// window.location.reload();
-				// console.log("collision")
-				const gameOverModal = document.querySelector("#game-over-modal");
-				gameOverModal.style.display = "flex";	
-				cancelAnimationFrame(this.frameId);			
-				break;
-				
-				
-			}
-		}
-		// this.gameView.rocks.forEach((rock) => {		
-		// 	if (this.collided(rock, this.player)) {
-		// 	  // alert("collision");
-		// 		this.togglePause();
-				
-		// 		// window.location.reload();
-		// 		// console.log("collision")
-		// 		// const gameOverModal = document.querySelector("#game-over-modal");
-		// 		// gameOverModal.style.display = "flex";		
-				
-		// 	}
-		// })
+			}	
+		}	
+
+		if (!collisionOccuring) {
+			this.collisionOccured = false;
+		}	
 	}
 
 	checkBubbleCollisions() {
@@ -164,16 +185,7 @@ export default class Game {
 				bubbleSound.play();
 				this.score++;
 				this.gameView.bubbles[idx].caught = true;
-			}
-			// const centerDist = this.dist([this.player.position.horizontal + (this.player.width / 2), this.player.position.vertical + (this.player.width / 2)], [bubble.x + bubble.radius, bubble.y + bubble.radius]);
-			// console.log(centerDist)
-			// if (centerDist < ((this.player.width / 2) + bubble.radius)) {
-			// 	bubbleSound.play();
-			// 	// console.log("collision")
-			// }
-
-		
+			}		
 		})
 	}
-
 }

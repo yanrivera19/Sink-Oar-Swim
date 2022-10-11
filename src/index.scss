@@ -3,18 +3,36 @@
 @import "./styles/home-page.scss";
 @import "./styles/game-over.scss";
 
+html {
+	height: 100%;
+	width: 100%;
+}
+
 body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
+	justify-content: center;
+	height: 100%;
+	
 }
 
 .main-container {
 	display: none;
+	width: 100%;
+	height: 100%;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	background: 
+		radial-gradient(
+			rgba(0, 0, 0, 0.053), 
+			rgba(0, 0, 0, 0.914)
+		),
+		url("/assets/images/bg-rocks2.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 #canvas {
@@ -24,15 +42,29 @@ body {
   height: 500;
 }
 
-#score {
+#player-stat-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	position: absolute;
-  top: 20%;
-  left: 70%;
+	top: 25%;
+  left: 60%;
 	z-index: 5;
-	// transform: translate(-50%, -50%);
+}
+
+#score {
+	font-family: 'Space Mono', sans-serif;
 	color: gold;
 	text-shadow: 1px 1px 2px black;
 	font-weight: bold;
-	font-size: 50px;
+	font-size: 35px;
+	margin-left: 25px;
 }
 
+#lives {
+	font-family: 'Space Mono', sans-serif;
+	color: rgb(179, 0, 0);
+	text-shadow: 1px 1px 2px black;
+	font-weight: bold;
+	font-size: 35px;
+}

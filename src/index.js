@@ -13,8 +13,8 @@ let currentGame;
 
 playBtn.addEventListener("click", (e) => {
 	homePage.style.display = "none";
-	mainContainer.style.display = "flex";
 	currentGame = new Game(canvas);
+	mainContainer.style.display = "flex";
 });
 
 playAgainBtn.addEventListener("click", (e) => {
