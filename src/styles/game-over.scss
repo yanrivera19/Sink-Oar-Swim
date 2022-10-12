@@ -9,7 +9,6 @@
 .go-content {
 	color: white;
 	// text-shadow: 1px 1px 4px gold;
-
 	background: rgba(0, 0, 0, 0.9);
 	border-radius: 20px;
 	padding: 10em;
@@ -22,13 +21,19 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin-top: 20px;
+}
+
+.go-content li {
+	cursor: pointer;
+	margin: 5px;
 }
 
 .go-title {
 	font-size: 4vw;
 	font-family: 'Archivo Black', sans-serif;
-	letter-spacing: 0.5vw;
-	text-indent: 0.5vw;
+	letter-spacing: 0.3vw;
+	text-indent: 0.3vw;
 	text-transform: uppercase;
 	color: rgb(255, 6, 6);
 }

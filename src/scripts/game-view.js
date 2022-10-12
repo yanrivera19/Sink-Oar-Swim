@@ -11,10 +11,9 @@ const rockImg3 = new Image();
 rockImg3.src = "./assets/images/solids/rock2.png";
 const rockImages = [rockImg1, rockImg2, rockImg3];
 const waterImg = new Image();
-waterImg.src = "./assets/images/water/water.jpg"
+waterImg.src = "./assets/images/water/water.jpg";
 const waterImg2 = new Image();
-waterImg2.src = "./assets/images/water/image.png"
-const bubbleSound = new Audio("./assets/audio/bubble-sound.mp3")
+waterImg2.src = "./assets/images/water/image.png";
 
 export default class GameView {
 	constructor(canvas) {
@@ -26,6 +25,7 @@ export default class GameView {
 		this.rocks = []
 		this.rockInit(canvas, rockImages, this.rockPositions);
 		this.bubbles = [];
+		this.velocityTracker = 2;
 		this.bubbleInit(canvas, this.bubblePositions);
 	}
 
@@ -68,7 +68,7 @@ export default class GameView {
 			river.y += river.velocity;			
 		})
 
-		if (this.rivers[0].y >= 500 - (this.riverVelo * 2)) {
+		if (this.rivers[0].y >= 600 - (this.riverVelo + this.velocityTracker)) {
 			let image;
 			
 			if (this.rivers[0].image === waterImg) {
@@ -87,7 +87,7 @@ export default class GameView {
 			rock.y += rock.velocity;			
 		})
 
-		if (this.rocks[0].y >= 500) {
+		if (this.rocks[0].y >= 600) {
 			this.rocks.shift();
 			this.rocks.push(new Rock(canvas, this.rockBubbleVelo, randomItemFromList(rockImages), {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
 		}		
@@ -103,15 +103,30 @@ export default class GameView {
 			bubble.y += bubble.velocity;	
 		})
 
-		if (this.bubbles[0].y >= 500) {
+		if (this.bubbles[0].y >= 600) {
 			this.bubbles.shift();
 			this.bubbles.push(new Bubble(canvas, this.rockBubbleVelo, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
 		}		
 	}
 
 	increaseVelocities(listOfObjects) {
-		this.riverVelo += 2
-		this.rockBubbleVelo += 2
+		this.riverVelo += this.velocityTracker;
+		this.rockBubbleVelo += this.velocityTracker
+		for (let objects of listOfObjects) {
+			for (let object of objects) {
+				if (object instanceof River) {
+					object.velocity = this.riverVelo;
+				} else {
+					object.velocity = this.rockBubbleVelo;
+				}
+			}
+		}
+	}
+
+	decreaseVelocities(listOfObjects) {
+		this.riverVelo = 2;
+		this.rockBubbleVelo = 3;
+		this.velocityTracker += 2;
 		for (let objects of listOfObjects) {
 			for (let object of objects) {
 				if (object instanceof River) {

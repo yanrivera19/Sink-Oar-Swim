@@ -13,6 +13,7 @@ const mainContainer = document.querySelector(".main-container");
 let playerStat = document.createElement("section");
 let score = document.createElement("h3");
 let lives = document.createElement("h3");
+const alert = document.querySelector("#alert");
 
 
 export default class Game {
@@ -25,6 +26,9 @@ export default class Game {
 		this.paused = false;
 		this.numOfPauses = 0;
 		this.timeCounter = 0;
+		this.fastRiverFlowTime = 0;
+		this.bubbleValue = 1;
+		this.secondsLeftBeforeSpeedIncrease = 300;
 		this.collisionOccured = false;
 		this.listenForPauseEvent();
 		this.eventListeners();
@@ -46,8 +50,23 @@ export default class Game {
 			this.player.animate();
 			this.checkRockCollisions();
 			this.checkBubbleCollisions(); 
-			if (!this.paused && this.timeCounter < 1800) this.timeCounter++;
-			if (this.timeCounter >= 1800) this.increaseDifficulty();
+			if (!this.paused && this.timeCounter < 1800 && this.fastRiverFlowTime === 0) this.timeCounter++;
+			if (!this.paused && this.timeCounter >= 1500 && this.fastRiverFlowTime === 0) {
+				alert.style.display = "flex";
+				alert.innerHTML = "Alert! Stream increase in 5 seconds";
+				this.secondsLeftBeforeSpeedIncrease--;
+			}
+			if (this.timeCounter >= 1800 && !this.gameOff && this.fastRiverFlowTime === 0) {
+				this.timeCounter = 0;
+				this.increaseVelocity();
+			}
+			if (!this.paused && this.fastRiverFlowTime < 900 && this.timeCounter === 0) {
+				this.fastRiverFlowTime++;				
+			}
+			if (!this.paused && this.fastRiverFlowTime >= 900 && this.timeCounter === 0) {
+				this.fastRiverFlowTime = 0;
+				this.decreaseVelocity();
+			}
 			this.frameId = requestAnimationFrame(this.animate.bind(this, ctx));
 		}		
 	}
@@ -117,11 +136,17 @@ export default class Game {
 		}
 	}
 
-	increaseDifficulty() {
-		this.timeCounter = 0;
+	increaseVelocity() {
+		alert.style.display = "none";	
+		this.secondsLeftBeforeSpeedIncrease = 300;
+		this.bubbleValue++;
 		this.gameView.increaseVelocities([this.gameView.rocks, this.gameView.bubbles, this.gameView.rivers]);
 	}
 
+	decreaseVelocity() {
+		this.gameView.decreaseVelocities([this.gameView.rocks, this.gameView.bubbles, this.gameView.rivers])
+	}
+ 
 	eventListeners() {
 		addEventListener("keydown", (e) => {		
 			if (e.code === "ArrowLeft") {
@@ -144,8 +169,7 @@ export default class Game {
 				this.player.velocityR = 0;
 				this.player.paddling = false;
 			}			
-		})
-		
+		})		
 	}
 
 	collided(obj1, obj2) {
@@ -177,8 +201,7 @@ export default class Game {
 					const gameOverModal = document.querySelector("#game-over-modal");
 					gameOverModal.style.display = "flex";	
 					break;
-				}			
-				
+				}							
 			}	
 		}	
 
@@ -191,8 +214,8 @@ export default class Game {
 		this.gameView.bubbles.forEach((bubble, idx) => {
 			if (this.collided(bubble, this.player)) {
 				bubbleSound.play();
-				this.score++;
 				this.gameView.bubbles[idx].caught = true;
+				this.score += this.bubbleValue;
 			}		
 		})
 	}

@@ -13,16 +13,46 @@
     <title>Sink Oar Swim</title>
   </head>
 
-  <body>
+  <body id="body">
+		<!-- <img class="bg-image" src="/assets/images/bg-rocks2.jpg" alt="rock-bg-img"> -->
 		<section id="home-page">
 			<video autoplay muted playsinline loop id="myVideo">
 				<source src="./assets/river-vid.mp4" type="video/mp4">
 			</video>	
 			<div class="home-content">							
 				<h1 id="hp-title">Sink Oar Swim</h1>
-				<ul>
+				<div id="loader"></div>
+				<ul id="hp-options">
 					<li id="play-btn">Play</li>
-					<li>How to Play</li>
+					<li id="how-to-btn">How to Play</li>
+					<section class="hp-social-links">
+						<a href="https://github.com/yanrivera19/Sink-Oar-Swim" target="_blank">
+							<i class="fa-brands fa-github"></i>
+						</a>
+						<a href="https://www.linkedin.com/in/ycrivera/" target="_blank">
+							<i class="fa-brands fa-linkedin-in"></i>
+						</a>
+					</section>
+				</ul>
+			</div>
+		</section>
+		<section id="how-to-page">
+			<div class="how-to-content">
+				<span id="go-back-btn">Go Back</span>
+				<h1 id="how-title">How To Play</h1>
+				<ul>
+					<li>
+						-Use the "left" and "right" arrow keys on the keyboard to move sideways- 
+					</li>
+					<li>
+						-Speed through the river, dodge the rocks, and catch bubbles-
+					</li>
+					<li>
+						-Your score increases as time goes by and whenever you catch a bubble-
+					</li>
+					<li>
+						-You can pause and un-pause the game by pressing the "p" key on the keyboard-
+					</li>
 					<section class="hp-social-links">
 						<a href="https://github.com/yanrivera19/Sink-Oar-Swim" target="_blank">
 							<i class="fa-brands fa-github"></i>
@@ -61,15 +91,12 @@
 			</div>	
 		</section>
 		<main class="main-container">
-			<h1 id="title">Sink Oar Swim</h1>
+			<header id="title">
+				<h1 >Sink Oar Swim</h1>
+			</header>
+			<h2 id="alert"></h2>
 			<canvas id="canvas"></canvas>
 		</main>
-		<!-- <footer>
-			<ul class="social-links">
-				<li>GitHub</li>
-				<li>LinkedIn</li>
-			</ul>
-		</footer> -->
   </body>
 
 </html>

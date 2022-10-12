@@ -15,10 +15,10 @@ export default class Rock {
 	}
 	
 	animate() {
-		this.top = this.y + 10;
-		this.right = this.x + this.width - 15;
-		this.bottom = this.y + this.height - 10;
-		this.left = this.x + 15;
+		this.top = this.y + 15;
+		this.right = this.x + this.width - 20;
+		this.bottom = this.y + this.height - 15;
+		this.left = this.x + 20;
 		this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 	}
 }

@@ -43,7 +43,7 @@ export default class Player {
 		this.left = this.position.horizontal + 60;
 		this.right = this.position.horizontal + 90;
 		this.top = this.position.vertical + 10;
-		this.bottom = this.position.vertical + 110;
+		this.bottom = this.position.vertical + 130;
 
 		if (this.position.horizontal < 0) {
 			this.velocityL = 0;

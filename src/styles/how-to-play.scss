@@ -1,0 +1,48 @@
+#how-to-page {
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.how-to-content {
+	color: black;
+	// text-shadow: 1px 1px 4px gold;
+	z-index: 100;
+	background: rgba(255, 255, 255, 0.8);
+	border-radius: 20px;
+	padding: 8em;
+}
+
+#how-title {
+	font-size: 4vw;
+	font-family: 'Archivo Black', sans-serif;
+	letter-spacing: 0.3vw;
+	text-indent: 0.3vw;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.how-to-content > ul {
+	font-family: 'Space Mono', sans-serif;
+	font-size: 1.2vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.how-to-content li {
+	margin: 5px;
+}
+
+.how-to-content > span {
+	font-family: 'Space Mono', sans-serif;
+	font-size: 1.2vw;
+	align-self: left;
+	cursor: pointer;
+}
+
+.how-to-content a {
+	font-size: 1.5em;
+}
