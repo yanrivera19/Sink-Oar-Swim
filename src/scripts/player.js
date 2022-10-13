@@ -42,8 +42,8 @@ export default class Player {
 	checkBoundaries() {
 		this.left = this.position.horizontal + 60;
 		this.right = this.position.horizontal + 90;
-		this.top = this.position.vertical + 10;
-		this.bottom = this.position.vertical + 130;
+		this.top = this.position.vertical + 15;
+		this.bottom = this.position.vertical + 125;
 
 		if (this.position.horizontal < 0) {
 			this.velocityL = 0;

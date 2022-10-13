@@ -1,10 +1,7 @@
 import Player from "./player";
 import Bubble from "./bubble";
 import RedCross from "./red-cross";
-import Rock from "./rock";
-import DeadTree from "./dead-tree"; 
 import GameView from "./game-view";
-import { distance } from "./utils";
 
 const bubbleSound = new Audio("./assets/audio/bubble-sound2.mp3");
 const getLifeSound = new Audio("./assets/audio/collect-life.mp3");
@@ -13,7 +10,7 @@ const wohoSound = new Audio("./assets/audio/woho.mp3");
 const bgMusic = new Audio("/assets/audio/nobm.mp3");
 const gameOverSound = new Audio("/assets/audio/game-over.mp3");
 const mainContainer = document.querySelector(".main-container");
-let playerStat = document.createElement("section");
+let playerStat = document.querySelector("#player-stat-container");
 let score = document.createElement("h3");
 let lives = document.createElement("h3");
 let mute = document.createElement("button");
@@ -33,6 +30,7 @@ export default class Game {
 		this.score = 0;
 		this.lives = 3;
 		this.paused = false;
+		this.muted = false;
 		this.numOfPauses = 0;
 		this.timeCounter = 0;
 		this.fastRiverFlowTime = 0;
@@ -41,10 +39,8 @@ export default class Game {
 		this.collisionOccured = false;
 		this.listenForPauseEvent();
 		this.eventListeners();
-		playerStat.setAttribute("id", "player-stat-container");
 		score.setAttribute("id", "score");
 		lives.setAttribute("id", "lives");
-		mainContainer.prepend(playerStat);
 		playerStat.append(lives, score, mute, unmute);
 		this.gameOff = false;
 		this.play();
@@ -71,19 +67,12 @@ export default class Game {
 				this.timeCounter = 0;
 				this.increaseVelocity();
 			}
-			if (!this.paused && this.fastRiverFlowTime < 900 && this.timeCounter === 0) {
-				this.fastRiverFlowTime++;				
-			}
+			if (!this.paused && this.fastRiverFlowTime < 900 && this.timeCounter === 0) this.fastRiverFlowTime++;	
 			if (!this.paused && this.fastRiverFlowTime >= 900 && this.timeCounter === 0) {
 				this.fastRiverFlowTime = 0;
 				this.decreaseVelocity();
 			}
-			// console.log(this.bubbleValue)
-			// console.log(this.timeCounter)
-			if (this.bubbleValue >= 2 && this.timeCounter === 0 && this.fastRiverFlowTime === 0) {
-				this.gameView.redCrossInit();
-				console.log("hi")
-			} 
+			if (this.bubbleValue >= 2 && this.timeCounter === 0 && this.fastRiverFlowTime === 0) this.gameView.redCrossInit();
 			this.frameId = requestAnimationFrame(this.animate.bind(this, ctx));
 		}		
 	}
@@ -93,9 +82,11 @@ export default class Game {
 		this.gameView = new GameView(canvas);
 		this.playing = true;
 		this.animate(this.ctx);
-		bgMusic.volume = 0.8;
-		bgMusic.loop = true;
-		bgMusic.play();
+		setTimeout(() => {
+			bgMusic.volume = 0.2;
+			bgMusic.loop = true;
+			bgMusic.play();			
+		}, 500);
 	}
 
 	renderScore() {		
@@ -108,7 +99,7 @@ export default class Game {
 
 	listenForPauseEvent() {
 		addEventListener("keydown", (e) => {		
-			if (e.code === "KeyP" && !this.gameOff) {
+			if (e.code === "Space" && !this.gameOff) {
 				this.numOfPauses++;
 
 				if (this.numOfPauses < 3) this.togglePause();
@@ -139,7 +130,7 @@ export default class Game {
 			countdown.innerHTML = "";
 			cancelAnimationFrame(this.frameId);			
 		} else {			
-			bgMusic.volume = 0.8;
+			bgMusic.volume = 0.2;
 			bgMusic.loop = true;
 			bgMusic.play();
 			let timeLeft = 3;
@@ -173,20 +164,6 @@ export default class Game {
 	}
  
 	eventListeners() {
-		mute.addEventListener("click", () => {
-			mute.style.display = "none";
-			unmute.style.display = "flex";
-			bgMusic.pause();
-		})
-		
-		unmute.addEventListener("click", () => {
-			unmute.style.display = "none";
-			mute.style.display = "flex";
-			bgMusic.volume = 0.8;
-			bgMusic.loop = true;
-			bgMusic.play();
-		})
-
 		addEventListener("keydown", (e) => {		
 			if (e.code === "ArrowLeft") {
 				this.player.velocityL = -3;
@@ -208,7 +185,25 @@ export default class Game {
 				this.player.velocityR = 0;
 				this.player.paddling = false;
 			}			
-		})		
+		})	
+		
+		addEventListener("keydown", (e) => {		
+			if (e.code === "KeyM" && !this.gameOff) {
+				if (this.muted === false) {
+					this.muted = true;
+					mute.style.display = "none";
+					unmute.style.display = "flex";
+					bgMusic.pause();
+				} else {
+					this.muted = false;
+					unmute.style.display = "none";
+					mute.style.display = "flex";
+					bgMusic.volume = 0.2;
+					bgMusic.loop = true;
+					bgMusic.play();
+				}
+			}
+		})
 	}
 
 	collided(obj1, obj2) {

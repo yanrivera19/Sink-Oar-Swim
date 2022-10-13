@@ -5,8 +5,6 @@ const canvas = document.getElementById("canvas");
 canvas.width = 800;
 canvas.height = 600;
 const riverSound = new Audio("/assets/audio/highflow-river.mp3");
-riverSound.loop = true;
-riverSound.play();
 const homePage = document.querySelector("#home-page");
 const howToPage = document.querySelector("#how-to-page");
 const playBtn = document.querySelector("#play-btn");
@@ -24,7 +22,7 @@ let currentGame;
 
 addEventListener("DOMContentLoaded", (e) =>{
 	setTimeout(()=> {
-		bodyEle.style.backgroundImage = "url('/assets/images/bg-img3.jpg')";
+		bodyEle.style.backgroundImage = "url('assets/images/bg-img3.jpg')";
 	}, 1000)
 });
 
@@ -53,7 +51,6 @@ unmuteBtn.addEventListener("click", () => {
 	riverSound.play();
 })
 
-
 howToBtn.addEventListener("click", (e) => {
 	homePage.style.display = "none";
 	howToPage.style.display = "flex";
@@ -73,8 +70,8 @@ goToHp.addEventListener("click", (e) => {
 	homePage.style.display = "flex";
 	hpOptions.style.display = "flex";
 	loader.style.display = "none";
-	riverSound.loop = true;
-	riverSound.play();
+	muteBtn.style.display = "none";
+	unmuteBtn.style.display = "flex";
 	mainContainer.style.display = "none";
 	gameOverModal.style.display = "none";
 })

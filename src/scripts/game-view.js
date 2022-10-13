@@ -119,7 +119,6 @@ export default class GameView {
 					this.catchables.push(new Bubble(canvas, this.rockBubbleRedCrossVelo, bubbleImg, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -200}));
 				} else if (catchable instanceof RedCross) {
 					this.catchables.splice(idx, 1);
-					// this.catchables.push(new RedCross(canvas, this.rockBubbleRedCrossVelo, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -200}));
 				}
 			}		
 

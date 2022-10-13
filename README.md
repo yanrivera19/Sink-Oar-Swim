@@ -1,34 +1,35 @@
 # Sink Oar Swim
 
-A white river kayaking game where users speed through a river and the longer they last without crashing, the higher their scores are. Users increase their scores through a combination of how long they last without crashing and how much currency they collect (in the form of bubbles). As time passes, speed of river will increase and more rocks might appear on the path, increasing the level of difficulty of the game. The goal of this project is to create a fun game for users and to make them want to improve their personal scores.
+A white river kayaking game where players can speed through the river, dodge the rocks, and catch bubbles to increase their score. River flow gets faster periodically. Players have three lives and they lose one everytime they crash against a rock. They can get more lives by catching the red crosses, and the value of the bubbles increase as the speed of the river increases. The goal of this project is to create a fun game for users and to make them want to improve their personal scores.
 
 ### Functionality & MVPs
 
-In Sink Oar Swim, users will be able to:
+In Sink Oar Swim, players will be able to:
 
-- Start, pause (by pressing the letter p key), and reset the game
-- Increase their scores by grabbing bubbles and by lasting withouth hitting rocks
-- Catch “power ups” to increase their chances of lasting longer. Ocationally, some turtle shells will appear on the water, and when users catch them, they aquire inmunity against rocks for a period of time
-- Use only two keys, one to move to the left, and another to move to the right
+- Start, pause (by pressing the letter 'space-bar' key), and reset the game
+- Increase their scores by grabbing bubbles
+- Increase their lives by catching the red crosses
+- Move character either to the left (by pressing the left arrow key) or to the right (by pressing the right arrow key)
 
 In addition, this project will include:
 
-- An about/home page describing the background and rules of the game
+- A home page and a 'how to play' page describing the background and rules of the game
 - A production README
-- Music playing in the background
-- Score tracking system using localStorage
+- Sound effects
+- Optional music playing in the background
+- Score tracking
 
 ---
 
 ## Wireframes
+
+- This is how I started envisioning the layout of the game:
 
 ![home page](/assets/images/3-Home-page.png)
 
 ![game view](/assets/images/1-Game-view.png)
 
 ![pause modal](/assets/images/2-Pause-modal.png)
-
-- On the home page, the nav links will inlcude links to this project's Github repo, my LinkedIn, and the about/home page.
 
 ---
 
@@ -42,6 +43,8 @@ In addition, this project will include:
 ---
 
 ## Implementation Timeline
+
+- This is how I had initially planned to build the game:
 
 - Friday Afternoon & Weekend: Create sprite sheet with all images that I will use in the game. Setup project, including getting webpack up and running. Spend time getting comfortable with the Canvas API. Create classes and see game objects and sprites rendered on screen.
 
