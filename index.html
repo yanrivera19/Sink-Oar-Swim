@@ -19,7 +19,15 @@
 			<video autoplay muted playsinline loop id="myVideo">
 				<source src="./assets/river-vid.mp4" type="video/mp4">
 			</video>	
-			<div class="home-content">							
+			<div class="home-content">
+				<div class="mute-buttons">
+					<button id="mute">
+						<i class="fa-solid fa-volume-xmark"></i>
+					</button>							
+					<button id="unmute">
+						<i class="fa-solid fa-volume-high"></i>
+					</button>								
+				</div>
 				<h1 id="hp-title">Sink Oar Swim</h1>
 				<div id="loader"></div>
 				<ul id="hp-options">
@@ -45,10 +53,19 @@
 						-Use the "left" and "right" arrow keys on the keyboard to move sideways- 
 					</li>
 					<li>
-						-Speed through the river, dodge the rocks, and catch bubbles-
+						-River flow gets faster periodically as time goes by-
 					</li>
 					<li>
-						-Your score increases as time goes by and whenever you catch a bubble-
+						-You have three lives and you lose one everytime you crash against a rock-
+					</li>
+					<li>
+						-You can get more lives by catching the red crosses-
+					</li>
+					<li>
+						-Your score increases whenever you catch a bubble-
+					</li>
+					<li>
+						-The value of the bubbles increase as the speed of the river increases-
 					</li>
 					<li>
 						-You can pause and un-pause the game by pressing the "p" key on the keyboard-
@@ -94,7 +111,10 @@
 			<header id="title">
 				<h1 >Sink Oar Swim</h1>
 			</header>
-			<h2 id="alert"></h2>
+			<div id="alert-msg-container">
+				<h2 id="alert"></h2>
+				<h3 id="alert-message"></h3>
+			</div>
 			<canvas id="canvas"></canvas>
 		</main>
   </body>

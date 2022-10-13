@@ -4,6 +4,9 @@ const mainContainer = document.querySelector(".main-container");
 const canvas = document.getElementById("canvas");
 canvas.width = 800;
 canvas.height = 600;
+const riverSound = new Audio("/assets/audio/highflow-river.mp3");
+riverSound.loop = true;
+riverSound.play();
 const homePage = document.querySelector("#home-page");
 const howToPage = document.querySelector("#how-to-page");
 const playBtn = document.querySelector("#play-btn");
@@ -15,6 +18,8 @@ const gameOverModal = document.querySelector("#game-over-modal");
 const hpOptions = document.querySelector("#hp-options");
 const loader = document.querySelector("#loader");
 const bodyEle = document.querySelector("#body");
+const muteBtn = document.querySelector("#mute");
+const unmuteBtn = document.querySelector("#unmute");
 let currentGame;
 
 addEventListener("DOMContentLoaded", (e) =>{
@@ -27,17 +32,31 @@ playBtn.addEventListener("click", (e) => {
 	hpOptions.style.display = "none";
 	loader.style.display = "flex";
 	setTimeout(() => {
-		mainContainer.style.display = "flex";
 		homePage.style.display = "none";
+		riverSound.pause();
+		mainContainer.style.display = "flex";
 		currentGame = new Game(canvas);
 	}, 2000)
 	
 });
 
+muteBtn.addEventListener("click", () => {
+	muteBtn.style.display = "none";
+	unmuteBtn.style.display = "flex";
+	riverSound.pause();
+})
+
+unmuteBtn.addEventListener("click", () => {
+	unmuteBtn.style.display = "none";
+	muteBtn.style.display = "flex";
+	riverSound.loop = true;
+	riverSound.play();
+})
+
+
 howToBtn.addEventListener("click", (e) => {
 	homePage.style.display = "none";
 	howToPage.style.display = "flex";
-	console.log(howToPage.style.display)
 })
 
 goBackBtn.addEventListener("click", (e) => {
@@ -54,6 +73,8 @@ goToHp.addEventListener("click", (e) => {
 	homePage.style.display = "flex";
 	hpOptions.style.display = "flex";
 	loader.style.display = "none";
+	riverSound.loop = true;
+	riverSound.play();
 	mainContainer.style.display = "none";
 	gameOverModal.style.display = "none";
 })

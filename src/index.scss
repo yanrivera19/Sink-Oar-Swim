@@ -42,7 +42,7 @@ body {
 	align-items: center;
 	position: absolute;
 	top: 25%;
-  left: 60%;
+  left: 65%;
 	z-index: 5;
 }
 
@@ -52,7 +52,8 @@ body {
 	text-shadow: 1px 1px 2px black;
 	font-weight: bold;
 	font-size: 35px;
-	margin-left: 25px;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
 #lives {
@@ -63,9 +64,34 @@ body {
 	font-size: 35px;
 }
 
-#alert {
+#mute-game, #unmute-game {
+	color: black;
+	font-weight: bold;
+	text-shadow: 1px 1px 2px black;
+	font-size: 35px;
+}
+
+#alert-msg-container {
 	display: none;
 	position: absolute;
 	top: 40%;
 	z-index: 5;
+	flex-direction: column;
+	align-items: center;
 }
+
+#alert {
+	color: rgb(179, 0, 0);
+	font-weight: bold;
+	font-size: 40px;
+	font-family: 'Archivo Black', sans-serif;
+	text-shadow: 1px 1px 2px black;
+}
+
+#alert-message {
+	font-family: 'Space Mono', sans-serif;	
+	color: white;
+	text-shadow: 1px 1px 2px black;
+	font-size: 25px;
+}
+

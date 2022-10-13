@@ -1,6 +1,8 @@
 import Rock from "./rock";
 import Bubble from "./bubble";
 import River from "./river";
+import RedCross from "./red-cross";
+import Game from "./game";
 import { randomNumFromRange, randomItemFromList } from "./utils";
 
 const rockImg1 = new Image();
@@ -14,31 +16,41 @@ const waterImg = new Image();
 waterImg.src = "./assets/images/water/water.jpg";
 const waterImg2 = new Image();
 waterImg2.src = "./assets/images/water/image.png";
+const redCrossImg = new Image();
+redCrossImg.src = "./assets/images/red-cross.png";
+const bubbleImg = new Image();
+bubbleImg.src = "./assets/images/water/bubble.png";
 
 export default class GameView {
 	constructor(canvas) {
-		this.rockBubbleVelo = 3;
+		this.canvas = canvas;
+		this.rockBubbleRedCrossVelo = 3;
 		this.riverVelo = 2;
 		this.dimensions = {width: canvas.width, height: canvas.height};
 		this.rivers = [];
 		this.riverInit(canvas)
 		this.rocks = []
 		this.rockInit(canvas, rockImages, this.rockPositions);
-		this.bubbles = [];
+		this.catchables = [];
 		this.velocityTracker = 2;
 		this.bubbleInit(canvas, this.bubblePositions);
 	}
 
 	rockInit(canvas, images, position) {
 		for (let i = 0; i < 3; i++) {
-			this.rocks.push(new Rock(canvas, this.rockBubbleVelo, randomItemFromList(images), position()[i]));
+			this.rocks.push(new Rock(canvas, this.rockBubbleRedCrossVelo, randomItemFromList(images), position()[i]));
 		}				
 	}
 
 	bubbleInit(canvas, position) {
 		for (let i = 0; i < 4; i++) {
-			this.bubbles.push(new Bubble(canvas, this.rockBubbleVelo, position()[i]));
+			this.catchables.push(new Bubble(canvas, this.rockBubbleRedCrossVelo, bubbleImg, position()[i]));
 		}		
+	}
+
+	redCrossInit() {
+		let randomX = randomNumFromRange(0, 800);
+		this.catchables.push(new RedCross(this.canvas, this.rockBubbleRedCrossVelo, redCrossImg, { x: randomX, y: -10 * this.velocityTracker }));
 	}
 
 	riverInit(canvas) {
@@ -49,7 +61,7 @@ export default class GameView {
 	animate() {		
 		this.moveRiver();
 		this.moveRocks();
-		this.moveBubbles();
+		this.moveCatchables();
 
 		this.rivers.forEach((river) => {
 			river.animate();			
@@ -58,8 +70,14 @@ export default class GameView {
 		this.rocks.forEach((rock) => {
 			rock.animate();			
 		})		
-		this.bubbles.forEach((bubble) => {
-			bubble.animate();			
+		this.catchables.forEach((catchable) => {
+			if(catchable instanceof Bubble) catchable.animate();			
+		})	
+	}
+
+	animateRedCross() {
+		this.catchables.forEach((catchable) => {
+			if(catchable instanceof RedCross) catchable.animate();			
 		})	
 	}
 
@@ -89,35 +107,45 @@ export default class GameView {
 
 		if (this.rocks[0].y >= 600) {
 			this.rocks.shift();
-			this.rocks.push(new Rock(canvas, this.rockBubbleVelo, randomItemFromList(rockImages), {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
+			this.rocks.push(new Rock(canvas, this.rockBubbleRedCrossVelo, randomItemFromList(rockImages), {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
 		}		
 	}
 
-	moveBubbles() {
-		this.bubbles.forEach((bubble, idx) => {
-			if (bubble.caught) {
-				this.bubbles.splice(idx, 1);
-				this.bubbles.push(new Bubble(canvas, this.rockBubbleVelo, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -200}));
-			}
+	moveCatchables() {
+		this.catchables.forEach((catchable, idx) => {
+			if (catchable.caught) {
+				if (catchable instanceof Bubble) {
+					this.catchables.splice(idx, 1);
+					this.catchables.push(new Bubble(canvas, this.rockBubbleRedCrossVelo, bubbleImg, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -200}));
+				} else if (catchable instanceof RedCross) {
+					this.catchables.splice(idx, 1);
+					// this.catchables.push(new RedCross(canvas, this.rockBubbleRedCrossVelo, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -200}));
+				}
+			}		
 
-			bubble.y += bubble.velocity;	
+			catchable.y += catchable.velocity;	
 		})
 
-		if (this.bubbles[0].y >= 600) {
-			this.bubbles.shift();
-			this.bubbles.push(new Bubble(canvas, this.rockBubbleVelo, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
-		}		
+		if (this.catchables[0].y >= 600) {
+			if (this.catchables[0] instanceof Bubble) {
+				this.catchables.shift();
+				this.catchables.push(new Bubble(canvas, this.rockBubbleRedCrossVelo, bubbleImg, {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
+			}	else if (this.catchables[0] instanceof RedCross) {
+				this.catchables.shift();
+			}
+		} 
+
 	}
 
 	increaseVelocities(listOfObjects) {
 		this.riverVelo += this.velocityTracker;
-		this.rockBubbleVelo += this.velocityTracker
+		this.rockBubbleRedCrossVelo += this.velocityTracker
 		for (let objects of listOfObjects) {
 			for (let object of objects) {
 				if (object instanceof River) {
 					object.velocity = this.riverVelo;
 				} else {
-					object.velocity = this.rockBubbleVelo;
+					object.velocity = this.rockBubbleRedCrossVelo;
 				}
 			}
 		}
@@ -125,14 +153,14 @@ export default class GameView {
 
 	decreaseVelocities(listOfObjects) {
 		this.riverVelo = 2;
-		this.rockBubbleVelo = 3;
+		this.rockBubbleRedCrossVelo = 3;
 		this.velocityTracker += 2;
 		for (let objects of listOfObjects) {
 			for (let object of objects) {
 				if (object instanceof River) {
 					object.velocity = this.riverVelo;
 				} else {
-					object.velocity = this.rockBubbleVelo;
+					object.velocity = this.rockBubbleRedCrossVelo;
 				}
 			}
 		}

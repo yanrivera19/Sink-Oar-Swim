@@ -1,20 +1,29 @@
 import Player from "./player";
 import Bubble from "./bubble";
+import RedCross from "./red-cross";
 import Rock from "./rock";
-import Turtle from "./turtle";
 import DeadTree from "./dead-tree"; 
 import GameView from "./game-view";
 import { distance } from "./utils";
 
-const waterImg = new Image();
-waterImg.src = "./assets/images/water/water.jpg";
 const bubbleSound = new Audio("./assets/audio/bubble-sound2.mp3");
+const getLifeSound = new Audio("./assets/audio/collect-life.mp3");
+const oughSound = new Audio("./assets/audio/ough.mp3");
+const wohoSound = new Audio("./assets/audio/woho.mp3");
+const bgMusic = new Audio("/assets/audio/nobm.mp3");
+const gameOverSound = new Audio("/assets/audio/game-over.mp3");
 const mainContainer = document.querySelector(".main-container");
 let playerStat = document.createElement("section");
 let score = document.createElement("h3");
 let lives = document.createElement("h3");
-const alert = document.querySelector("#alert");
-
+let mute = document.createElement("button");
+mute.innerHTML = "<i id='mute-game' class='fa-solid fa-volume-xmark'></i>"
+let unmute = document.createElement("button");
+unmute.innerHTML = "<i id='unmute-game' class='fa-solid fa-volume-high'></i>"
+unmute.style.display = "none";
+const alertContainer = document.querySelector("#alert-msg-container");
+const redAlert = document.querySelector("#alert");
+const alertMessage = document.querySelector("#alert-message");
 
 export default class Game {
 	constructor(canvas) {
@@ -36,7 +45,7 @@ export default class Game {
 		score.setAttribute("id", "score");
 		lives.setAttribute("id", "lives");
 		mainContainer.prepend(playerStat);
-		playerStat.append(lives, score);
+		playerStat.append(lives, score, mute, unmute);
 		this.gameOff = false;
 		this.play();
 	}
@@ -44,16 +53,18 @@ export default class Game {
 	animate(ctx) {
 		if (!this.gameOff) {
 			ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
-			this.gameView.animate();		
+			this.gameView.animate();
+			if (this.bubbleValue >= 2) this.gameView.animateRedCross();		
 			this.renderScore();
 			this.renderLives();
 			this.player.animate();
 			this.checkRockCollisions();
-			this.checkBubbleCollisions(); 
+			this.checkCatchableCollisions(); 
 			if (!this.paused && this.timeCounter < 1800 && this.fastRiverFlowTime === 0) this.timeCounter++;
 			if (!this.paused && this.timeCounter >= 1500 && this.fastRiverFlowTime === 0) {
-				alert.style.display = "flex";
-				alert.innerHTML = "Alert! Stream increase in 5 seconds";
+				alertContainer.style.display = "flex";
+				redAlert.innerHTML = "ALERT!";
+				alertMessage.innerHTML = "Stream speed will increase soon"
 				this.secondsLeftBeforeSpeedIncrease--;
 			}
 			if (this.timeCounter >= 1800 && !this.gameOff && this.fastRiverFlowTime === 0) {
@@ -67,6 +78,12 @@ export default class Game {
 				this.fastRiverFlowTime = 0;
 				this.decreaseVelocity();
 			}
+			// console.log(this.bubbleValue)
+			// console.log(this.timeCounter)
+			if (this.bubbleValue >= 2 && this.timeCounter === 0 && this.fastRiverFlowTime === 0) {
+				this.gameView.redCrossInit();
+				console.log("hi")
+			} 
 			this.frameId = requestAnimationFrame(this.animate.bind(this, ctx));
 		}		
 	}
@@ -76,6 +93,9 @@ export default class Game {
 		this.gameView = new GameView(canvas);
 		this.playing = true;
 		this.animate(this.ctx);
+		bgMusic.volume = 0.8;
+		bgMusic.loop = true;
+		bgMusic.play();
 	}
 
 	renderScore() {		
@@ -113,11 +133,15 @@ export default class Game {
 		const pauseHeader = document.querySelector("#pause-header");
 
 		if (!this.paused) {
+			bgMusic.pause();
 			this.paused = true;
 			modal.style.display = "flex"
 			countdown.innerHTML = "";
 			cancelAnimationFrame(this.frameId);			
 		} else {			
+			bgMusic.volume = 0.8;
+			bgMusic.loop = true;
+			bgMusic.play();
 			let timeLeft = 3;
 			pauseHeader.innerHTML = "Resume in:";
 			const timer = setInterval(() => {
@@ -137,17 +161,32 @@ export default class Game {
 	}
 
 	increaseVelocity() {
-		alert.style.display = "none";	
+		alertContainer.style.display = "none";	
 		this.secondsLeftBeforeSpeedIncrease = 300;
 		this.bubbleValue++;
-		this.gameView.increaseVelocities([this.gameView.rocks, this.gameView.bubbles, this.gameView.rivers]);
+		wohoSound.play();
+		this.gameView.increaseVelocities([this.gameView.rocks, this.gameView.catchables, this.gameView.rivers]);
 	}
 
 	decreaseVelocity() {
-		this.gameView.decreaseVelocities([this.gameView.rocks, this.gameView.bubbles, this.gameView.rivers])
+		this.gameView.decreaseVelocities([this.gameView.rocks, this.gameView.catchables, this.gameView.rivers])
 	}
  
 	eventListeners() {
+		mute.addEventListener("click", () => {
+			mute.style.display = "none";
+			unmute.style.display = "flex";
+			bgMusic.pause();
+		})
+		
+		unmute.addEventListener("click", () => {
+			unmute.style.display = "none";
+			mute.style.display = "flex";
+			bgMusic.volume = 0.8;
+			bgMusic.loop = true;
+			bgMusic.play();
+		})
+
 		addEventListener("keydown", (e) => {		
 			if (e.code === "ArrowLeft") {
 				this.player.velocityL = -3;
@@ -191,15 +230,18 @@ export default class Game {
 			if (this.collided(rock, this.player)) {
 				collisionOccuring = true;
 				if (this.lives > 0 && !this.collisionOccured) {
+					if (this.lives > 1) oughSound.play();
 					this.lives--;
 					this.collisionOccured = true;
 					break;
 				} else if (this.lives > 0 && this.collisionOccured) {
 					break;
 				} else {
+					bgMusic.pause();
 					this.gameOff = true;
 					const gameOverModal = document.querySelector("#game-over-modal");
 					gameOverModal.style.display = "flex";	
+					gameOverSound.play();
 					break;
 				}							
 			}	
@@ -210,13 +252,19 @@ export default class Game {
 		}	
 	}
 
-	checkBubbleCollisions() {
-		this.gameView.bubbles.forEach((bubble, idx) => {
-			if (this.collided(bubble, this.player)) {
-				bubbleSound.play();
-				this.gameView.bubbles[idx].caught = true;
-				this.score += this.bubbleValue;
-			}		
+	checkCatchableCollisions() {
+		this.gameView.catchables.forEach((catchable, idx) => {
+			if (this.collided(catchable, this.player)) {
+				if (catchable instanceof Bubble) {
+					bubbleSound.play();
+					this.gameView.catchables[idx].caught = true;
+					this.score += this.bubbleValue;
+				}	else if (catchable instanceof RedCross) {
+					getLifeSound.play();
+					this.gameView.catchables[idx].caught = true;
+					this.lives++;
+				}	
+			}
 		})
 	}
 }
