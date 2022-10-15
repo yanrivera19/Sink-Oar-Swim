@@ -32,6 +32,7 @@ export default class Game {
 		this.muted = false;
 		this.numOfPauses = 0;
 		this.timeCounter = 0;
+		this.playerVelo = 3;
 		this.fastRiverFlowTime = 0;
 		this.bubbleValue = 1;
 		this.secondsLeftBeforeSpeedIncrease = 300;
@@ -128,10 +129,12 @@ export default class Game {
 			modal.style.display = "flex"
 			countdown.innerHTML = "";
 			cancelAnimationFrame(this.frameId);			
-		} else {			
-			bgMusic.volume = 0.2;
-			bgMusic.loop = true;
-			bgMusic.play();
+		} else {		
+			if (!this.muted) {
+				bgMusic.volume = 0.2;
+				bgMusic.loop = true;
+				bgMusic.play();
+			}
 			let timeLeft = 3;
 			pauseHeader.innerHTML = "Resume in:";
 			const timer = setInterval(() => {
@@ -154,6 +157,7 @@ export default class Game {
 		alertContainer.style.display = "none";	
 		this.secondsLeftBeforeSpeedIncrease = 300;
 		this.bubbleValue++;
+		if (this.bubbleValue % 3 === 0) this.playerVelo++;
 		wohoSound.play();
 		this.gameView.increaseVelocities([this.gameView.rocks, this.gameView.catchables, this.gameView.rivers]);
 	}
@@ -165,12 +169,22 @@ export default class Game {
 	eventListeners() {
 		addEventListener("keydown", (e) => {		
 			if (e.code === "ArrowLeft") {
-				this.player.velocityL = -3;
-				this.player.paddling = true;
+				if (this.fastRiverFlowTime < 900 && this.timeCounter === 0) {
+					this.player.velocityL = -(this.playerVelo);
+				} else {
+					this.player.velocityL = -3;
+				}				
+
+				this.player.paddling = true;	
 			}
 
 			if (e.code === "ArrowRight") {
-				this.player.velocityR = 3;
+				if (this.fastRiverFlowTime < 900 && this.timeCounter === 0) {
+					this.player.velocityR = this.playerVelo;
+				} else {
+					this.player.velocityR = 3;	
+				}				
+
 				this.player.paddling = true;
 			} 
 		})
