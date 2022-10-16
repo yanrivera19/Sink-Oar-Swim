@@ -54,23 +54,19 @@ export default class GameView {
 	}
 
 	riverInit(canvas) {
-		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: 0}));
-		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height)}));
-		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: -(this.dimensions.height * 2)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: -200}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height + 370)}));
 	}
 
 	animate() {		
-		this.moveRiver();
-		this.moveRocks();
+		const uncatchables = [this.rivers, this.rocks];
+		this.moveUncatchables(uncatchables);
 		this.moveCatchables();
 
-		this.rivers.forEach((river) => {
-			river.animate();			
-		})	
-		
-		this.rocks.forEach((rock) => {
-			rock.animate();			
-		})		
+		for (let objs of uncatchables) {
+			objs.forEach((obj) => obj.animate());
+		}	
+
 		this.catchables.forEach((catchable) => {
 			if(catchable instanceof Bubble) catchable.animate();			
 		})	
@@ -82,42 +78,31 @@ export default class GameView {
 		})	
 	}
 
-	determineFactor() {
-		let factor;
-
-		if (this.riverVelo === 2) {
-			factor = 0;
-		} else {
-			factor = this.riverVelo + this.velocityTracker;
+	moveUncatchables(lists) {
+		for (let list of lists) {
+			list.forEach((item) => item.y += item.velocity);
 		}
 
-		return factor;
+		this.newRiver();
+		this.newRock();
 	}
-
-	moveRiver() {
-		this.rivers.forEach((river) => {
-			river.y += river.velocity;			
-		});		
-
-		if (this.rivers[0].y >= 600 - (this.determineFactor())) {
+	
+	newRiver() {
+		if (this.rivers[0].y >= 600 ) {
 			let image;
 			
 			if (this.rivers[0].image === waterImg) {
-				image = waterImg2;
-			} else {
 				image = waterImg;
+			} else {
+				image = waterImg2;
 			}
 
 			this.rivers.shift();
-			this.rivers.push(new River(canvas, this.riverVelo, image, {x: 0, y: -(this.dimensions.height * 2)}));
-		}		
+			this.rivers.push(new River(canvas, this.riverVelo, image, {x: 0, y: -(this.dimensions.height + 370)}));
+		}				
 	}
 
-	moveRocks() {
-		this.rocks.forEach((rock) => {
-			rock.y += rock.velocity;			
-		})
-
+	newRock() {
 		if (this.rocks[0].y >= 600) {
 			this.rocks.shift();
 			this.rocks.push(new Rock(canvas, this.rockBubbleRedCrossVelo, randomItemFromList(rockImages), {x: randomNumFromRange(10, this.dimensions.width - 120), y: -150}));
@@ -136,8 +121,12 @@ export default class GameView {
 			}		
 
 			catchable.y += catchable.velocity;	
-		})
+		});
+		
+		this.newCatchable();
+	}
 
+	newCatchable() {
 		if (this.catchables[0].y >= 600) {
 			if (this.catchables[0] instanceof Bubble) {
 				this.catchables.shift();
@@ -145,7 +134,7 @@ export default class GameView {
 			}	else if (this.catchables[0] instanceof RedCross) {
 				this.catchables.shift();
 			}
-		} 
+		}
 
 	}
 
