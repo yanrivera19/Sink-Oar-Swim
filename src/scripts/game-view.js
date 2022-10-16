@@ -56,6 +56,7 @@ export default class GameView {
 	riverInit(canvas) {
 		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: 0}));
 		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: -(this.dimensions.height * 2)}));
 	}
 
 	animate() {		
@@ -81,22 +82,34 @@ export default class GameView {
 		})	
 	}
 
+	determineFactor() {
+		let factor;
+
+		if (this.riverVelo === 2) {
+			factor = 0;
+		} else {
+			factor = this.riverVelo + this.velocityTracker;
+		}
+
+		return factor;
+	}
+
 	moveRiver() {
 		this.rivers.forEach((river) => {
 			river.y += river.velocity;			
-		})
+		});		
 
-		if (this.rivers[0].y >= 600 - (this.riverVelo + this.velocityTracker)) {
+		if (this.rivers[0].y >= 600 - (this.determineFactor())) {
 			let image;
 			
 			if (this.rivers[0].image === waterImg) {
-				image = waterImg;
-			} else {
 				image = waterImg2;
+			} else {
+				image = waterImg;
 			}
 
 			this.rivers.shift();
-			this.rivers.push(new River(canvas, this.riverVelo, image, {x: 0, y: -(this.dimensions.height)}));
+			this.rivers.push(new River(canvas, this.riverVelo, image, {x: 0, y: -(this.dimensions.height * 2)}));
 		}		
 	}
 
