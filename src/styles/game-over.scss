@@ -12,17 +12,30 @@
 	color: white;
 	background: rgba(26, 26, 26, 0.9);
 	border-radius: 20px;
-	padding: 4em;
+	padding: 2.5em;
+}
+
+.go-content > p {
+	font-family: 'Space Mono', sans-serif;
+	font-size: 25px;
+	text-align: center;
+	margin-top: 20px;
 }
 
 .go-content > ul {
 	font-family: 'Space Mono', sans-serif;
-	font-size: 25px;
+	font-size: 20px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	margin-top: 20px;
+}
+
+#final-score {
+	font-weight: bold;
+	font-size: 30px;
+	color: gold;
 }
 
 .go-content li {
@@ -36,10 +49,10 @@
 }
 
 .go-title {
-	font-size: 4vw;
+	font-size: 3.5em;
 	font-family: 'Archivo Black', sans-serif;
-	letter-spacing: 0.3vw;
-	text-indent: 0.3vw;
+	letter-spacing: 0.2em;
+	text-indent: 0.2em;
 	text-transform: uppercase;
 	color: rgb(255, 6, 6);
 }

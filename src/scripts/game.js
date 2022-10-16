@@ -247,6 +247,8 @@ export default class Game {
 				} else {
 					bgMusic.pause();
 					this.gameOff = true;
+					const finalScore = document.querySelector("#final-score");
+					finalScore.innerHTML = `${this.score}`;
 					const gameOverModal = document.querySelector("#game-over-modal");
 					gameOverModal.style.display = "flex";	
 					gameOverSound.play();
