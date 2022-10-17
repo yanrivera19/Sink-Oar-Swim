@@ -55,7 +55,7 @@ export default class GameView {
 
 	riverInit(canvas) {
 		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: -200}));
-		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height + 370)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height + 200)}));
 	}
 
 	animate() {		
@@ -98,7 +98,7 @@ export default class GameView {
 			}
 
 			this.rivers.shift();
-			this.rivers.push(new River(canvas, this.riverVelo, image, {x: 0, y: -(this.dimensions.height + 370)}));
+			this.rivers.push(new River(canvas, this.riverVelo, image, {x: 0, y: -(this.dimensions.height + 200)}));
 		}				
 	}
 

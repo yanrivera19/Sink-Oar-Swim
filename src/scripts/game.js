@@ -54,7 +54,7 @@ export default class Game {
 			this.renderScore();
 			this.renderLives();
 			this.player.animate();
-			// this.checkRockCollisions();
+			this.checkRockCollisions();
 			this.checkCatchableCollisions(); 
 			if (!this.paused && this.timeCounter < 1800 && this.fastRiverFlowTime === 0) this.timeCounter++;
 			if (!this.paused && this.timeCounter >= 1500 && this.fastRiverFlowTime === 0) {
@@ -157,7 +157,7 @@ export default class Game {
 		alertContainer.style.display = "none";	
 		this.secondsLeftBeforeSpeedIncrease = 300;
 		this.bubbleValue++;
-		if (this.bubbleValue % 3 === 0) this.playerVelo++;
+		if (this.bubbleValue % 2 === 0) this.playerVelo++;
 		wohoSound.play();
 		this.gameView.increaseVelocities([this.gameView.rocks, this.gameView.catchables, this.gameView.rivers]);
 	}
