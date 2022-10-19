@@ -2,7 +2,10 @@ const playerImg = new Image();
 playerImg.src = "./assets/images/player.png";
 const playerAltImg = new Image();
 playerAltImg.src = "./assets/images/player-alt.png";
-
+const hurtPlayerImg = new Image();
+hurtPlayerImg.src = "./assets/images/hurt-player.png";
+const hurtPlayerAltImg = new Image();
+hurtPlayerAltImg.src = "./assets/images/hurt-player-alt.png";
 
 export default class Player {
 	constructor(canvas) {
@@ -18,14 +21,26 @@ export default class Player {
 		this.left;
 		this.width = 140;
 		this.height = 120;
+		this.image;
+		this.hurt = false;
+	}
+
+	determineImage() {
+		if (this.paddling && !this.hurt) {
+			this.image = playerAltImg;
+		} else if (!this.paddling && !this.hurt) {
+			this.image = playerImg;
+		} else if (this.paddling && this.hurt) {
+			this.image = hurtPlayerAltImg;
+		} else {
+			this.image = hurtPlayerImg;
+		}
 	}
 
 	drawPlayer(ctx) {		
-		if (this.paddling) {
-			ctx.drawImage(playerAltImg, this.position.horizontal, this.position.vertical, this.width, this.height);
-		} else {
-			ctx.drawImage(playerImg, this.position.horizontal, this.position.vertical, this.width, this.height);
-		}
+		this.determineImage();
+
+		ctx.drawImage(this.image, this.position.horizontal, this.position.vertical, this.width, this.height);
 	}
 
 	animate() {

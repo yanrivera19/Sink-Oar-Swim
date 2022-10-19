@@ -237,7 +237,12 @@ export default class Game {
 		for (let rock of this.gameView.rocks) {
 			if (this.collided(rock, this.player)) {
 				collisionOccuring = true;
+				
 				if (this.lives > 0 && !this.collisionOccured) {
+					this.player.hurt = true;
+					setTimeout(() => {
+						this.player.hurt = false;
+					}, 700);
 					if (this.lives > 1) oughSound.play();
 					this.lives--;
 					this.collisionOccured = true;
