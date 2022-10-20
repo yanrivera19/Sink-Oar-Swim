@@ -9,7 +9,7 @@ export default class River {
 	}
 	
 	animate() {
-		this.ctx.drawImage(this.image, this.x, this.y, this.dimensions.width, this.dimensions.height + 200);
+		this.ctx.drawImage(this.image, this.x, this.y, this.dimensions.width, this.dimensions.height);
 	}
 
 }

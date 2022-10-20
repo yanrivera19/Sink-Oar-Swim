@@ -2,7 +2,6 @@ import Rock from "./rock";
 import Bubble from "./bubble";
 import River from "./river";
 import RedCross from "./red-cross";
-import Game from "./game";
 import { randomNumFromRange, randomItemFromList } from "./utils";
 
 const rockImg1 = new Image();
@@ -54,8 +53,14 @@ export default class GameView {
 	}
 
 	riverInit(canvas) {
-		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: -200}));
-		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height + 300)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: 0}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: -(this.dimensions.height * 2)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height * 3)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: -(this.dimensions.height * 4)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height * 5)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg, {x: 0, y: -(this.dimensions.height * 6)}));
+		this.rivers.push(new River(canvas, this.riverVelo, waterImg2, {x: 0, y: -(this.dimensions.height * 7)}));
 	}
 
 	animate() {		
@@ -88,17 +93,17 @@ export default class GameView {
 	}
 	
 	newRiver() {
-		if (this.rivers[0].y >= 600 - this.riverVelo) {
+		if (this.rivers[0].y >= 600) {
 			let image;
 			
 			if (this.rivers[0].image === waterImg) {
-				image = waterImg;
-			} else {
 				image = waterImg2;
+			} else {
+				image = waterImg;
 			}
 
+			this.rivers.push(new River(canvas, this.riverVelo, image, {x: 0, y: this.rivers[this.rivers.length - 1].y - this.dimensions.height + this.riverVelo}));
 			this.rivers.shift();
-			this.rivers.push(new River(canvas, this.riverVelo, image, {x: 0, y: -(this.dimensions.height + 300)}));
 		}				
 	}
 
