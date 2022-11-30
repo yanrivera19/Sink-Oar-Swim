@@ -284,6 +284,7 @@ input[type=submit] {
   opacity: 0;
   animation: fadeIn 1s;
   animation-fill-mode: forwards;
+  font-family: "Space Mono", sans-serif;
 }
 
 @keyframes fadeIn {
@@ -321,16 +322,11 @@ input[type=submit] {
   justify-content: center;
 }
 
-.how-to-content h3 {
-  font-family: "Space Mono", sans-serif;
-}
-
 .how-to-content li {
   margin: 5px;
 }
 
 .how-to-content > span {
-  font-family: "Space Mono", sans-serif;
   align-self: left;
   cursor: pointer;
 }
