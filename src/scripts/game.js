@@ -74,7 +74,7 @@ export default class Game {
       ) {
         alertContainer.style.display = "flex";
         redAlert.innerHTML = "ALERT!";
-        alertMessage.innerHTML = "Stream speed will increase soon";
+        alertMessage.innerHTML = "The river's speed will increase soon";
         this.secondsLeftBeforeSpeedIncrease--;
       }
       if (
