@@ -37,8 +37,8 @@ In addition, this game includes:
 
 ### Collision Detection:
 
- - Following code helps detect when a player either collides with a rock or catches a bubble or life and what happens after it. 
- - Thanks to the Canvas API requestAnimationFrame method, these collisions are checked 60 times per second.
+ - The following code helps detect when a player either collides with a rock or catches a bubble or life and what happens after it. 
+ - Thanks to the ```Window.requestAnimationFrame()``` method, these collisions are checked 60 times per second.
 
 ```javascript
 // src/scripts/game.js line 262
