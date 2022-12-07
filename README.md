@@ -24,7 +24,7 @@ In Sink Oar Swim, players are able to:
 - Increase their lives by catching the red crosses
 - Move kayak either to the left (by pressing the left arrow key) or to the right (by pressing the right arrow key)
 
-In addition, this includes:
+In addition, this game includes:
 
 - A home page and a 'how to play' page describing the background and rules of the game
 - Sound effects
