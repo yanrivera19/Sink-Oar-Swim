@@ -1,10 +1,8 @@
-
 # Sink Oar Swim
 
 <img  src="assets/images/sink-alert.png" width="400">
 
 [Live Game](https://yanrivera19.github.io/Sink-Oar-Swim/)
-
 
 A white river kayaking game where players can speed through river rapids, dodge the rocks, and catch bubbles to increase their score. Rapids get faster periodically. Players have three lives and they lose one everytime they crash against a rock. They can get more lives by catching the red crosses, and the score value of the bubbles increases every time players reach the rapids. The goal of this project is to create a fun game for users and to make them want to improve their personal scores.
 
@@ -111,3 +109,8 @@ collided(obj1, obj2) {
     });
   }
 ```
+
+## Audio Credits
+
+#### Background Music:
+ - "Blue Monday" by New Order
