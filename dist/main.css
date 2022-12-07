@@ -112,7 +112,8 @@ input[type=submit] {
     opacity: 1;
   }
 }
-#hp-title, #title {
+#hp-title,
+#title {
   font-size: 3em;
   font-family: "Archivo Black", sans-serif;
   letter-spacing: 0.2em;
@@ -124,6 +125,7 @@ input[type=submit] {
   margin-top: 30px;
   color: gold;
   text-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+  text-align: center;
 }
 
 #title {
@@ -279,12 +281,14 @@ input[type=submit] {
   color: rgb(26, 26, 26);
   background: rgba(255, 255, 255, 0.8);
   border-radius: 20px;
-  padding: 3em;
+  padding: 2.5em;
   margin: 50px;
+  max-height: 90%;
   opacity: 0;
   animation: fadeIn 1s;
   animation-fill-mode: forwards;
   font-family: "Space Mono", sans-serif;
+  overflow-y: auto;
 }
 
 @keyframes fadeIn {
@@ -368,6 +372,27 @@ body {
   animation-fill-mode: forwards;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(29, 28, 29, 0.5215686275);
+  border-radius: 20px;
+  height: 100px;
+  transform: translateY(224px);
+  opacity: 1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  transition: opacity 0.1s 0.5s;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -390,10 +415,24 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.details-container {
   position: absolute;
   top: 5%;
   left: 65%;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#mute-info-container {
+  text-align: center;
+  font-weight: 900;
+  font-size: 15px;
+  max-width: 200px;
+  font-family: "Space Mono", sans-serif;
 }
 
 #score {

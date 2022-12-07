@@ -30,6 +30,27 @@ body {
   animation-fill-mode: forwards;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1d1c1d85;
+  border-radius: 20px;
+  height: 100px;
+  transform: translateY(224px);
+  opacity: 1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  transition: opacity 0.1s 0.5s;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -53,10 +74,24 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.details-container {
   position: absolute;
   top: 5%;
   left: 65%;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#mute-info-container {
+  text-align: center;
+  font-weight: 900;
+  font-size: 15px;
+  max-width: 200px;
+  font-family: "Space Mono", sans-serif;
 }
 
 #score {
