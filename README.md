@@ -15,7 +15,7 @@ A white river kayaking game where players can speed through river rapids, dodge 
 
 ---
 
-## Functionality
+## Functionality 
 
 In Sink Oar Swim, players are able to:
 
@@ -32,3 +32,78 @@ In addition, this game includes:
 - Score tracking
 
 ---
+
+## Code Snippets
+
+### Collision Detection:
+
+ - The following code helps detect when a player either collides with a rock or catches a bubble or life and what happens after it. 
+ - Thanks to the ```Window.requestAnimationFrame()``` method, these collisions are checked 60 times per second.
+
+```javascript
+// src/scripts/game.js line 262
+
+collided(obj1, obj2) {
+    if (obj1.left > obj2.right || obj1.right < obj2.left) {
+      return false;
+    }
+
+    if (obj1.top > obj2.bottom || obj1.bottom < obj2.top) {
+      return false;
+    }
+
+    return true;
+  }
+
+  checkRockCollisions() {
+    let collisionOccuring = false;
+
+    for (let rock of this.gameView.rocks) {
+      if (this.collided(rock, this.player)) {
+        collisionOccuring = true;
+
+        if (this.lives > 0 && !this.collisionOccured) {
+          this.player.hurt = true;
+          setTimeout(() => {
+            this.player.hurt = false;
+          }, 700);
+          if (this.lives > 1) oughSound.play();
+          this.lives--;
+          this.collisionOccured = true;
+          break;
+        } else if (this.lives > 0 && this.collisionOccured) {
+          break;
+        } else {
+          bgMusic.pause();
+          this.gameOff = true;
+          const finalScore = document.querySelector("#final-score");
+          finalScore.innerHTML = `${this.score}`;
+          const gameOverModal = document.querySelector("#game-over-modal");
+          gameOverModal.style.display = "flex";
+          gameOverSound.play();
+          break;
+        }
+      }
+    }
+
+    if (!collisionOccuring) {
+      this.collisionOccured = false;
+    }
+  }
+
+  checkCatchableCollisions() {
+    this.gameView.catchables.forEach((catchable, idx) => {
+      if (this.collided(catchable, this.player)) {
+        if (catchable instanceof Bubble) {
+          bubbleSound.play();
+          this.gameView.catchables[idx].caught = true;
+          this.score += this.bubbleValue;
+        } else if (catchable instanceof RedCross) {
+          getLifeSound.play();
+          this.gameView.catchables[idx].caught = true;
+          this.lives++;
+        }
+      }
+    });
+  }
+```
