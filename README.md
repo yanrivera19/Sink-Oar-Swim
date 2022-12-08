@@ -1,6 +1,6 @@
 # Sink Oar Swim
 
-<img  src="assets/images/sink-alert.png" width="400">
+<img  src="assets/images/sink-alert.png" width="50%">
 
 [Live Game](https://yanrivera19.github.io/Sink-Oar-Swim/)
 
