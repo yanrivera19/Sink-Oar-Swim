@@ -63,13 +63,13 @@ export default class Game {
       this.checkCatchableCollisions();
       if (
         !this.paused &&
-        this.timeCounter < 1800 &&
+        this.timeCounter < 900 &&
         this.fastRiverFlowTime === 0
       )
         this.timeCounter++;
       if (
         !this.paused &&
-        this.timeCounter >= 1500 &&
+        this.timeCounter >= 600 &&
         this.fastRiverFlowTime === 0
       ) {
         alertContainer.style.display = "flex";
@@ -78,7 +78,7 @@ export default class Game {
         this.secondsLeftBeforeSpeedIncrease--;
       }
       if (
-        this.timeCounter >= 1800 &&
+        this.timeCounter >= 900 &&
         !this.gameOff &&
         this.fastRiverFlowTime === 0
       ) {
