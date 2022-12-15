@@ -20,7 +20,7 @@ unmute.innerHTML = "<i id='unmute-game' class='fa-solid fa-volume-high'></i>";
 unmute.style.display = "none";
 let muteInfo = document.createElement("h3");
 muteInfo.setAttribute("id", "mute-info");
-muteInfo.innerHTML = "Press the 'M' key to mute/unmute the background music";
+muteInfo.innerHTML = "Toggle 'M' key to mute/unmute background music";
 const alertContainer = document.querySelector("#alert-msg-container");
 const redAlert = document.querySelector("#alert");
 const alertMessage = document.querySelector("#alert-message");
