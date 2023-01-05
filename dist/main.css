@@ -302,7 +302,6 @@ input[type=submit] {
   opacity: 0;
   animation: fadeIn 1s;
   animation-fill-mode: forwards;
-  font-family: "Space Mono", sans-serif;
   overflow-y: auto;
 }
 
@@ -332,6 +331,7 @@ input[type=submit] {
 }
 
 .how-to-content h3 {
+  font-family: "Archivo Black", sans-serif;
   margin-top: 15px;
   font-weight: bold;
 }
@@ -345,21 +345,17 @@ input[type=submit] {
   margin: 5px;
 }
 
-.how-to-content > span {
-  align-self: left;
-  cursor: pointer;
-}
-
 .how-to-content a {
   font-size: 1.5em;
 }
 
 #go-back-btn {
-  transition: 0.2s ease-in-out;
+  font-family: "Space Mono", sans-serif;
+  cursor: pointer;
 }
 
 #go-back-btn:hover {
-  font-weight: bold;
+  text-shadow: 0 0 0.01px black;
 }
 
 * {
@@ -451,6 +447,10 @@ body {
   font-family: "Space Mono", sans-serif;
 }
 
+.instructions-info {
+  margin-bottom: 10px;
+}
+
 #score {
   font-family: "Space Mono", sans-serif;
   color: gold;
@@ -475,6 +475,10 @@ body {
   font-weight: bold;
   text-shadow: 1px 1px 2px black;
   font-size: 35px;
+}
+
+#mute-game {
+  margin-right: 5px;
 }
 
 #alert-msg-container {

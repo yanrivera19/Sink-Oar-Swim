@@ -15,7 +15,6 @@
   opacity: 0;
   animation: fadeIn 1s;
   animation-fill-mode: forwards;
-  font-family: "Space Mono", sans-serif;
   overflow-y: auto;
 }
 
@@ -46,6 +45,7 @@
 }
 
 .how-to-content h3 {
+  font-family: "Archivo Black", sans-serif;
   margin-top: 15px;
   font-weight: bold;
 }
@@ -59,19 +59,15 @@
   margin: 5px;
 }
 
-.how-to-content > span {
-  align-self: left;
-  cursor: pointer;
-}
-
 .how-to-content a {
   font-size: 1.5em;
 }
 
 #go-back-btn {
-  transition: 0.2s ease-in-out;
+  font-family: "Space Mono", sans-serif;
+  cursor: pointer;
 }
 
 #go-back-btn:hover {
-  font-weight: bold;
+  text-shadow: 0 0 0.01px black;
 }

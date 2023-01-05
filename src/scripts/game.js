@@ -19,8 +19,11 @@ let unmute = document.createElement("button");
 unmute.innerHTML = "<i id='unmute-game' class='fa-solid fa-volume-high'></i>";
 unmute.style.display = "none";
 let muteInfo = document.createElement("h3");
-muteInfo.setAttribute("id", "mute-info");
-muteInfo.innerHTML = "Toggle 'M' key to mute/unmute background music";
+muteInfo.setAttribute("class", "instructions-info");
+muteInfo.innerHTML = "Toggle [M] key to mute/unmute music";
+let pauseInfo = document.createElement("h3");
+pauseInfo.setAttribute("class", "instructions-info");
+pauseInfo.innerHTML = "Toggle [Space Bar] key to pause/unpause game";
 const alertContainer = document.querySelector("#alert-msg-container");
 const redAlert = document.querySelector("#alert");
 const alertMessage = document.querySelector("#alert-message");
@@ -46,7 +49,7 @@ export default class Game {
     score.setAttribute("id", "score");
     lives.setAttribute("id", "lives");
     playerStat.append(lives, score, mute, unmute);
-    muteInfoContainer.append(muteInfo);
+    muteInfoContainer.append(muteInfo, pauseInfo);
     this.gameOff = false;
     this.play();
   }
